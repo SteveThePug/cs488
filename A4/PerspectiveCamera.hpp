@@ -12,7 +12,8 @@ public:
    * @param near_z Near plane
    * @param far_z Far plane
    */
-  PerspectiveCamera(float fov, float aspect, float near_z, float far_z);
+  PerspectiveCamera(float fov, float aspect, float near_z, float far_z,
+                    glm::vec3 positon, glm::vec3 target, glm::vec3 up);
 
   // Getters
   /** Return the projection matrix

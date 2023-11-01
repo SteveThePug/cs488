@@ -8,6 +8,14 @@ private:
   glm::mat4 view_matrix; // Calculated view matrix
 
 public:
+  // Constructor
+  /** Constructor for the class
+   * @param position position of the camera
+   * @param target target camera is looking at
+   * @param up up vector
+   */
+  Camera(glm::vec3 position, glm::vec3 target, glm::vec3 up);
+
   // Setters
 
   /** Set camera position

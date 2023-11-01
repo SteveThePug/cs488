@@ -2,8 +2,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 PerspectiveCamera::PerspectiveCamera(float fov, float aspect, float near_z,
-                                     float far_z)
-    : fov(fov), aspect(aspect), near_z(near_z), far_z(far_z) {
+                                     float far_z, glm::vec3 position,
+                                     glm::vec3 target, glm::vec3 up)
+    : Camera(position, target, up) {
+  setPerspective(fov, aspect, near_z, far_z);
   updateProjectionMatrix();
 }
 
