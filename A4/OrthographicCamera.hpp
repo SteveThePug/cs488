@@ -2,8 +2,28 @@
 
 class OrthographicCamera : Camera {
 private:
-  glm::vec3 left_bottom_near;  // Left bottom near vector of viewbox
-  glm::vec3 right_top_far;     // Right top far vector of viewbox
-  float width, height;         // Width and height of viewport
+  float width, height, depth;
   glm::mat4 projection_matrix; // Calculated projection matrix
+public:
+  /** Constructor for orthographic camera
+   * @param width Width of viewbox (position in middle)
+   * @param height Height of viewbox (position in middle)
+   * @param depth Depth of viewbox (position at 0)
+   */
+  OrthographicCamera(float width, float height, float depth, glm::vec3 position,
+                     glm::vec3 target, glm::vec3 up);
+
+  /** Set the viewbox
+   * @param left_bottom_near left, bottom, near point of viewbox
+   * @param right_top_far right, top, far point of viewbox
+   */
+  void setPerspective(float width, float height, float depth);
+
+  /** Get the projection matrix
+   */
+  glm::mat4 getProjectionMatrix() override;
+
+  /** Update projection matrix with given viewbox
+   */
+  void updateProjectionMatrix() override;
 };
