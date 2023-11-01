@@ -13,7 +13,7 @@ class Scene {
 private:
   std::vector<Camera> cameras; // Collection of Cameras in the Scene
   std::vector<Light> lights;   // Collection of Lights in the Scene
-  SceneNode *root;             // Root of the SceneNode hierarchy
+  const SceneNode *root;       // Root of the SceneNode hierarchy
   glm::vec3 ambient_light;     // Ambient light in the Scene
 
 public:
@@ -68,10 +68,11 @@ public:
    * Sets the root SceneNode for the Scene.
    * @param sceneNode The root SceneNode to be set.
    */
-  void setSceneNode(const SceneNode &sceneNode);
+  void setSceneNode(const SceneNode *sceneNode);
 
   /**
    * Sets the ambient light in a scene
    * @param ambient The vec3 color of the ambient light
    */
+  void setAmbientLight(const glm::vec3 &ambient);
 };
