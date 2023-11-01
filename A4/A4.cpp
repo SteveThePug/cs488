@@ -20,13 +20,22 @@ void A4_Render(
     // Lighting parameters
     const glm::vec3 &ambient, const std::list<Light *> &lights) {
 
+  // Generate the camera
   vec3 camera_pos(1, 1, 1), camera_target(0, 0, 0), camera_up(0, 1, 0);
   float camera_fov(70.0f), camera_aspect(1.2f), camera_near(0.1f),
       camera_far(100.0f);
   PerspectiveCamera camera(camera_fov, camera_aspect, camera_near, camera_far,
                            camera_pos, camera_target, camera_up);
+
+  // Generate the scene and add the camera
   Scene scene = Scene();
   scene.addCamera(&camera);
+
+  // Add a triangle to the scene to test
+  glm::vec3 a(1.0f, 0.0f, -1.0f), b(-1.0f, 0.0f, -1.0f), c(0.0f, 0.0f, 1.0f);
+  Triangle triangle = Triangle(a, b, c);
+
+  // Add a triangle to our scene
 
   // Fill in raytracing code here...
   // std::cout << "F23: Calling A4_Render(\n"

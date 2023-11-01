@@ -1,3 +1,6 @@
+#pragma once
+
+#include "Triangle.hpp"
 #include <glm/glm.hpp>
 #include <optional>
 #include <tuple>
@@ -31,7 +34,7 @@ public:
    * @param t The parameter to move along the ray
    * @return The point in 3D space at t
    */
-  glm::vec3 getT(float t);
+  glm::vec3 getT(float t) const;
 
   /**
    * Computes where a Ray intersects a Plane
@@ -39,7 +42,7 @@ public:
    * @param offset The offset of the Plane
    * @return The value of t at the intersection, 0 if no intersection
    */
-  float intersectPlaneT(glm::vec3 normal, float offset);
+  float intersectPlaneT(glm::vec3 normal, float offset) const;
 
   /**
    * Computes where a Ray intersects a Plane
@@ -48,7 +51,7 @@ public:
    * @return The point at which the Ray intersects the Plane, vec3(0) for no
    *intersection
    */
-  glm::vec3 intersectPlanePoint(glm::vec3 normal, float offset);
+  glm::vec3 intersectPlanePoint(glm::vec3 normal, float offset) const;
 
   /**
    * Computes where a Ray intersects a Sphere
@@ -56,7 +59,8 @@ public:
    * @param radius The radius of the Sphere
    * @return The value of t at the intersection, 0 for no intersection
    */
-  std::tuple<float, float> intersectSphereT(glm::vec3 position, float radius);
+  std::tuple<float, float> intersectSphereT(glm::vec3 position,
+                                            float radius) const;
 
   /**
    * Computes where a Ray intersects a Sphere
@@ -65,5 +69,13 @@ public:
    * @return The point of the intersection, vec3(0) for no intersection
    */
   std::tuple<glm::vec3, glm::vec3> intersectSpherePoints(glm::vec3 position,
-                                                         float radius);
+                                                         float radius) const;
+
+  /**
+   * Ray Triangle intesection
+   * @param Ray Incoming ray
+   * @return Barycentric cord of the collision
+   * @note Returns vec3(0) if there is no intersection
+   */
+  glm::vec3 intersectTriangleBarycentric(const Triangle &tri) const;
 };

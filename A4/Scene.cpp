@@ -43,3 +43,8 @@ void Scene::setSceneNode(const SceneNode *sceneNode) {
 void Scene::setAmbientLight(const glm::vec3 &ambient) {
   ambient_light = ambient;
 }
+
+// Using the last available camera, we will render to the viewport.
+// Viewport Scene::renderToViewport() {
+//
+// }
