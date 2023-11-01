@@ -14,10 +14,16 @@ public:
    * @param position Camera's position
    */
   void setPosition(const glm::vec3 &position);
+
   /** Set camera orientation
    * @param orientation Camera's orientation
    */
   void setTarget(const glm::vec3 &target);
+
+  /** Set the up vector
+   * @param up The up vector
+   */
+  void setUp(const glm::vec3 &up);
 
   // Getters
 
@@ -32,7 +38,7 @@ public:
   /** returns camera projection matrix
    * @return projection matrix
    */
-  glm::mat4 getProjectionMatrix();
+  virtual glm::mat4 getProjectionMatrix();
 
   // Updates
 
