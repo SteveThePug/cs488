@@ -38,12 +38,12 @@ public:
   /** returns camera projection matrix
    * @return projection matrix
    */
-  virtual glm::mat4 getProjectionMatrix();
+  virtual glm::mat4 getProjectionMatrix() = 0;
 
   // Updates
 
   /** Generates a view matrix based on field variables */
-  virtual void updateProjectionMatrix();
+  virtual void updateProjectionMatrix() = 0;
   /** Generates a projection matrix based on field variables */
   void updateViewMatrix();
   /** Updates the camera view and projection matrix */
