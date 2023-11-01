@@ -1,3 +1,5 @@
+#pragma once
+
 #include "glm/glm.hpp"
 
 class Camera {
@@ -15,9 +17,9 @@ public:
    * @param up up vector
    */
   Camera(glm::vec3 position, glm::vec3 target, glm::vec3 up);
+  virtual ~Camera() = default;
 
   // Setters
-
   /** Set camera position
    * @param position Camera's position
    */

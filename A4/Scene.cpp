@@ -3,9 +3,9 @@
 
 Scene::Scene() : root(nullptr), ambient_light(0.0f, 0.0f, 0.0f) {}
 
-void Scene::addCamera(Camera camera) { cameras.push_back(camera); }
+void Scene::addCamera(Camera *camera) { cameras.push_back(camera); }
 
-void Scene::addLight(Light light) { lights.push_back(light); }
+void Scene::addLight(Light *light) { lights.push_back(light); }
 
 void Scene::removeCamera(int index) {
   if (index < 0 || index >= static_cast<int>(cameras.size())) {
@@ -21,14 +21,14 @@ void Scene::removeLight(int index) {
   lights.erase(lights.begin() + index);
 }
 
-Camera Scene::getCamera(int index) {
+Camera *Scene::getCamera(int index) {
   if (index < 0 || index >= static_cast<int>(cameras.size())) {
     throw std::out_of_range("Camera index is out of range");
   }
   return cameras[index];
 }
 
-Light Scene::getLight(int index) {
+Light *Scene::getLight(int index) {
   if (index < 0 || index >= static_cast<int>(lights.size())) {
     throw std::out_of_range("Light index is out of range");
   }

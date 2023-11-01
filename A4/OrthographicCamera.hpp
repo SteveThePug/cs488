@@ -1,6 +1,6 @@
 #include "Camera.hpp"
 
-class OrthographicCamera : Camera {
+class OrthographicCamera : public Camera {
 private:
   float width, height, depth;
   glm::mat4 projection_matrix; // Calculated projection matrix

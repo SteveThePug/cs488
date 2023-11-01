@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Camera.hpp"
 #include "Light.hpp"
 #include "SceneNode.hpp"
@@ -11,10 +13,10 @@
  */
 class Scene {
 private:
-  std::vector<Camera> cameras; // Collection of Cameras in the Scene
-  std::vector<Light> lights;   // Collection of Lights in the Scene
-  const SceneNode *root;       // Root of the SceneNode hierarchy
-  glm::vec3 ambient_light;     // Ambient light in the Scene
+  std::vector<Camera *> cameras; // Collection of Cameras in the Scene
+  std::vector<Light *> lights;   // Collection of Lights in the Scene
+  const SceneNode *root;         // Root of the SceneNode hierarchy
+  glm::vec3 ambient_light;       // Ambient light in the Scene
 
 public:
   /**
@@ -26,13 +28,13 @@ public:
    * Adds a Camera to the Scene.
    * @param camera The Camera to be added.
    */
-  void addCamera(Camera camera);
+  void addCamera(Camera *camera);
 
   /**
    * Adds a Light to the Scene.
    * @param light The Light to be added.
    */
-  void addLight(Light light);
+  void addLight(Light *light);
 
   /**
    * Removes a Camera from the Scene by index.
@@ -54,7 +56,7 @@ public:
    * @return The requested Camera.
    * @throws std::out_of_range if index out of range
    */
-  Camera getCamera(int index);
+  Camera *getCamera(int index);
 
   /**
    * Retrieves a Light from the Scene by index.
@@ -62,7 +64,7 @@ public:
    * @return The requested Light.
    * @throws std::out_of_range if index out of range
    */
-  Light getLight(int index);
+  Light *getLight(int index);
 
   /**
    * Sets the root SceneNode for the Scene.

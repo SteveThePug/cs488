@@ -1,5 +1,8 @@
+#pragma once
+
 #include "Camera.hpp"
-class PerspectiveCamera : Camera {
+
+class PerspectiveCamera : public Camera {
 private:
   float fov, aspect;           // fov and aspect
   float near_z, far_z;         // Near and far planes
