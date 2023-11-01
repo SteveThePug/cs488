@@ -1,11 +1,12 @@
 #include "OrthographicCamera.hpp"
-#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 OrthographicCamera::OrthographicCamera(float width, float height, float depth,
                                        glm::vec3 position, glm::vec3 target,
                                        glm::vec3 up)
     : Camera(position, target, up) {
-  this->setPerspective(width, height, depth);
+
+  setPerspective(width, height, depth);
 }
 
 // Getters

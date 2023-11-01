@@ -4,6 +4,9 @@
 
 // Constructor and other necessary methods if needed
 
+Camera::Camera(glm::vec3 position, glm::vec3 target, glm::vec3 up)
+    : position(position), target(target), up(up){};
+
 // Set camera position
 void Camera::setPosition(const glm::vec3 &position) {
   this->position = position;
@@ -30,7 +33,7 @@ glm::mat4 Camera::getViewMatrix() {
 
 // Update the view matrix
 void Camera::updateViewMatrix() {
-  view_matrix = glm::lookAt(position, target, up);
+  this->view_matrix = glm::lookAt(position, target, up);
 }
 
 // Update all respective camera matricies

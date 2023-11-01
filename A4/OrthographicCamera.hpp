@@ -1,8 +1,10 @@
+#pragma once
+
 #include "Camera.hpp"
 
 class OrthographicCamera : public Camera {
 private:
-  float width, height, depth;
+  float width, height, depth;  // Viewing parameters
   glm::mat4 projection_matrix; // Calculated projection matrix
 public:
   /** Constructor for orthographic camera

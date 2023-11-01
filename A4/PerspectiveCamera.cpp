@@ -24,8 +24,7 @@ void PerspectiveCamera::setPerspective(float fov, float aspect, float near_z,
 }
 
 void PerspectiveCamera::updateProjectionMatrix() {
-  projection_matrix =
-      glm::perspective(glm::radians(fov), aspect, near_z, far_z);
+  projection_matrix = glm::perspective(fov, aspect, near_z, far_z);
 }
 
 glm::mat4 PerspectiveCamera::getProjectionMatrix() { return projection_matrix; }
