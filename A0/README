@@ -1,0 +1,13 @@
+COMPILATION
+
+Standard compilation proceure:
+
+premake4 gmake
+make
+
+
+------------------------------------------------------------------------
+MANUAL
+
+This program only fits the specification.
+
