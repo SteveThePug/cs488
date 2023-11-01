@@ -1,0 +1,37 @@
+[
+          {
+            "directory": "/home/adam/OneDrive/Desktop/Coding/cs488/A3/build",
+            "file": "/home/adam/OneDrive/Desktop/Coding/cs488/A3/A3.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/Desktop/Coding/cs488/shared -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/include -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/gl3w -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/Desktop/Coding/cs488/A3/build/Debug/A3.o -MF /home/adam/OneDrive/Desktop/Coding/cs488/A3/build/Debug/A3.d -c /home/adam/OneDrive/Desktop/Coding/cs488/A3/A3.cpp"
+          }
+,
+          {
+            "directory": "/home/adam/OneDrive/Desktop/Coding/cs488/A3/build",
+            "file": "/home/adam/OneDrive/Desktop/Coding/cs488/A3/GeometryNode.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/Desktop/Coding/cs488/shared -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/include -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/gl3w -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/Desktop/Coding/cs488/A3/build/Debug/GeometryNode.o -MF /home/adam/OneDrive/Desktop/Coding/cs488/A3/build/Debug/GeometryNode.d -c /home/adam/OneDrive/Desktop/Coding/cs488/A3/GeometryNode.cpp"
+          }
+,
+          {
+            "directory": "/home/adam/OneDrive/Desktop/Coding/cs488/A3/build",
+            "file": "/home/adam/OneDrive/Desktop/Coding/cs488/A3/JointNode.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/Desktop/Coding/cs488/shared -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/include -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/gl3w -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/Desktop/Coding/cs488/A3/build/Debug/JointNode.o -MF /home/adam/OneDrive/Desktop/Coding/cs488/A3/build/Debug/JointNode.d -c /home/adam/OneDrive/Desktop/Coding/cs488/A3/JointNode.cpp"
+          }
+,
+          {
+            "directory": "/home/adam/OneDrive/Desktop/Coding/cs488/A3/build",
+            "file": "/home/adam/OneDrive/Desktop/Coding/cs488/A3/Main.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/Desktop/Coding/cs488/shared -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/include -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/gl3w -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/Desktop/Coding/cs488/A3/build/Debug/Main.o -MF /home/adam/OneDrive/Desktop/Coding/cs488/A3/build/Debug/Main.d -c /home/adam/OneDrive/Desktop/Coding/cs488/A3/Main.cpp"
+          }
+,
+          {
+            "directory": "/home/adam/OneDrive/Desktop/Coding/cs488/A3/build",
+            "file": "/home/adam/OneDrive/Desktop/Coding/cs488/A3/SceneNode.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/Desktop/Coding/cs488/shared -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/include -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/gl3w -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/Desktop/Coding/cs488/A3/build/Debug/SceneNode.o -MF /home/adam/OneDrive/Desktop/Coding/cs488/A3/build/Debug/SceneNode.d -c /home/adam/OneDrive/Desktop/Coding/cs488/A3/SceneNode.cpp"
+          }
+,
+          {
+            "directory": "/home/adam/OneDrive/Desktop/Coding/cs488/A3/build",
+            "file": "/home/adam/OneDrive/Desktop/Coding/cs488/A3/scene_lua.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/Desktop/Coding/cs488/shared -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/include -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/gl3w -I/home/adam/OneDrive/Desktop/Coding/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/Desktop/Coding/cs488/A3/build/Debug/scene_lua.o -MF /home/adam/OneDrive/Desktop/Coding/cs488/A3/build/Debug/scene_lua.d -c /home/adam/OneDrive/Desktop/Coding/cs488/A3/scene_lua.cpp"
+          }
+]

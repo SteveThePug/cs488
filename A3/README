@@ -1,0 +1,62 @@
+------------------------------------COMPILIATION
+
+Standard gmake and premake compile procedure should work.
+
+------------------------------------MANUAL
+
+./A3 {FILENAME}
+
+Everything should be implemented as specified.
+
+JOINT MENU
+I have added a joint menu where each joint can be altered with a slider.
+Rotations that have no flexibility are not visible on the joint menu.
+This will not interact with the edit menu.
+
+------------------------------------CHANGES TO DATA STRUCTURES
+
+I have made some drastic changes to all Nodes.
+
+void SceneNode::render(const ShaderProgram &m_shader, const BatchInfoMap &m_batchInfoMap, mat4 m_view, mat4 m_model, const bool picking) const;
+Updates a matrix with nodes transformations.
+Recursively renders all child nodes, passing the matrix as an arguement.
+
+void GeometryNode::render(const ShaderProgram &m_shader, const BatchInfoMap &m_batchInfoMap, glm::mat4 m_view,glm::mat4 m_model, const bool picking) const;
+Recursively renders all child nodes the same way as SceneNode.
+Interacts directly with openGL to render the model.
+Upon the boolean 'picking' flag, it will render with a unique color.
+
+
+void JointNode::render(const ShaderProgram &m_shader, const BatchInfoMap &m_batchInfoMap, glm::mat4 m_view, glm::mat4 m_model, const bool picking) const;
+Updates a matrix with nodes transformations.
+Updates the matrix with rotations.
+Recursively renders all child nodes, passing the matrix as an argument.
+
+void SceneNode::reset();
+Recursively reset all child nodes.
+
+void JointNode::reset();
+Recursively reset all child nodes.
+Sets current_rotation_x, current_rotation_y to 0.
+
+SceneNode *SceneNode::get_child(string name);
+Recursively search for node with the same name, return NULL otherwise.
+
+SceneNode *SceneNode::get_child(unsigned int id) {
+Recursively search for node with the same id, return NULL otherwise.
+
+set<SceneNode *> SceneNode::get_joints();
+Recursively search for nodes of type JointType.
+
+void SceneNode::updateShaderUniforms(const ShaderProgram &shader, const glm::mat4 &m_view, const glm::mat4 &m_model, const glm::vec3 &kd, const bool picking) {
+Used to update uniforms during rendering.
+Does not update normals if picking.
+
+
+------------------------------------PUPPET
+
+I have included a diagram of the puppets structure in PuppetDiagram.png (there is a missing node beneat headJoint for the head)
+The arms and legs only rotate in one direction.
+You can verify that both rotation axis work by the rotation of the head, and eyes respectively.
+There is a option on the options menu labeled play to prove both axies work.
+All credit for the inspiration of the model goes to the creators of the game 'The Binding of Issac'
