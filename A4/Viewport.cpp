@@ -1,6 +1,8 @@
 #include "Viewport.hpp"
+#include <format>
 #include <glm/glm.hpp>
 #include <vector>
+using namespace std;
 
 Viewport::Viewport(int width, int height)
     : width(width), height(height), pixels(width * height) {}
@@ -23,3 +25,16 @@ glm::vec3 Viewport::getPixel(int x, int y) const {
 // Getters for width and height
 int Viewport::getWidth() const { return width; }
 int Viewport::getHeight() const { return height; }
+
+std::ostream &operator<<(std::ostream &os, const Viewport &viewport) {
+  for (int y = 0; y < viewport.getHeight(); ++y) {
+    for (int x = 0; x < viewport.getWidth(); ++x) {
+      glm::vec3 color = viewport.getPixel(x, y);
+      // Formatting each color component to be 3 characters wide with 1 decimal
+      // place
+      os << format("{:.1f}", color.x);
+    }
+    os << '\n';
+  }
+  return os;
+}

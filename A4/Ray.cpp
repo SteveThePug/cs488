@@ -3,8 +3,9 @@
 using namespace glm;
 using namespace std;
 
-Ray::Ray(const vec3 &origin, const vec3 &direction)
-    : origin(origin), direction(direction) {}
+Ray::Ray(const vec3 &origin, const vec3 &direction) : origin(origin) {
+  this->direction = normalize(direction);
+}
 
 vec3 Ray::getT(float t) const { return origin + t * direction; }
 

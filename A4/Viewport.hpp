@@ -1,4 +1,5 @@
 #include <glm/glm.hpp>
+#include <ostream>
 #include <vector>
 
 class Viewport {
@@ -18,4 +19,5 @@ public:
   // Getters for width and height
   int getWidth() const;
   int getHeight() const;
+  friend std::ostream &operator<<(std::ostream &os, const Viewport &viewport);
 };
