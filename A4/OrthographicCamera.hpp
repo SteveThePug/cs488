@@ -23,9 +23,15 @@ public:
 
   /** Get the projection matrix
    */
-  glm::mat4 getProjectionMatrix() override;
+  glm::mat4 getProjectionMatrix();
 
   /** Update projection matrix with given viewbox
    */
-  void updateProjectionMatrix() override;
+  void updateProjectionMatrix();
+
+  /** Render the scene to the viewport
+   * @param scene The scene to render
+   * @returns Viewport width x height pixel array
+   */
+  Viewport renderToViewport(SceneNode scene) override;
 };

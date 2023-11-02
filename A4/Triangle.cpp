@@ -6,10 +6,9 @@ Triangle::Triangle(const glm::vec3 &a, const glm::vec3 &b, const glm::vec3 &c)
   normal = glm::normalize(glm::cross(b - a, c - a));
 }
 
-glm::vec3 phongShading(const std::vector<Light> &lights, const Camera &camera,
-                       glm::vec3 barycentric_coord) {
-  return vec3();
-}
+glm::vec3 Triangle::phongShading(const std::vector<Light> &lights,
+                                 const Camera &camera,
+                                 glm::vec3 barycentric_coord) const {}
 
 glm::vec3 flatShading(const std::vector<Light> &lights) { return vec3(); }
 

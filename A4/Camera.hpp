@@ -1,5 +1,7 @@
 #pragma once
 
+#include "SceneNode.hpp"
+#include "Viewport.hpp"
 #include "glm/glm.hpp"
 
 class Camera {
@@ -45,15 +47,13 @@ public:
    * @return view matrix
    */
   glm::mat4 getViewMatrix();
-  /** returns camera projection matrix
-   * @return projection matrix
+
+  /** Render the scene to a viewport
+   * @param scene The scene to render
    */
-  virtual glm::mat4 getProjectionMatrix() = 0;
+  virtual Viewport renderToViewport(SceneNode scene) = 0;
 
   // Updates
-
-  /** Generates a view matrix based on field variables */
-  virtual void updateProjectionMatrix() = 0;
   /** Generates a projection matrix based on field variables */
   void updateViewMatrix();
   /** Updates the camera view and projection matrix */
