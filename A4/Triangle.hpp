@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <optional>
 #include <vector>
+
 class Triangle {
 private:
   glm::vec3 norm_a, norm_b, norm_c; // Normals at points

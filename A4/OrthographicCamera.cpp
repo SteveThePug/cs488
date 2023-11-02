@@ -29,3 +29,8 @@ void OrthographicCamera::updateProjectionMatrix() {
   projection_matrix = glm::ortho(-halfWidth, halfWidth, -halfHeight, halfHeight,
                                  -depth / 2.0f, depth / 2.0f);
 }
+
+void OrthographicCamera::renderToViewport(Viewport *viewport,
+                                          SceneNode *scene) {
+  return;
+}

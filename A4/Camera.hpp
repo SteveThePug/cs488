@@ -5,7 +5,7 @@
 #include "glm/glm.hpp"
 
 class Camera {
-private:
+protected:
   glm::vec3 position;    // Position of camera in world space
   glm::vec3 target;      // Direction camera is looking
   glm::vec3 up;          // Up vector
@@ -43,6 +43,11 @@ public:
    * @return camera position
    */
   glm::vec3 getPosition();
+  /**
+   * returns camera's target
+   * @return camera target
+   */
+  glm::vec3 getTarget();
   /** returns camera view matrix
    * @return view matrix
    */
@@ -51,7 +56,7 @@ public:
   /** Render the scene to a viewport
    * @param scene The scene to render
    */
-  virtual Viewport renderToViewport(SceneNode scene) = 0;
+  virtual void renderToViewport(Viewport *viewport, SceneNode *scene) = 0;
 
   // Updates
   /** Generates a projection matrix based on field variables */

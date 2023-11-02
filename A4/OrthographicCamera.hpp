@@ -33,5 +33,5 @@ public:
    * @param scene The scene to render
    * @returns Viewport width x height pixel array
    */
-  Viewport renderToViewport(SceneNode scene) override;
+  void renderToViewport(Viewport *viewport, SceneNode *scene) override;
 };

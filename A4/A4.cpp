@@ -31,10 +31,6 @@ void A4_Render(
   Scene scene = Scene();
   scene.addCamera(&camera);
 
-  // Add a triangle to the scene to test
-  glm::vec3 a(1.0f, 0.0f, -1.0f), b(-1.0f, 0.0f, -1.0f), c(0.0f, 0.0f, 1.0f);
-  Triangle triangle = Triangle(a, b, c);
-
   // Add a triangle to our scene
 
   // Fill in raytracing code here...
