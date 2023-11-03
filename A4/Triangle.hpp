@@ -9,8 +9,7 @@
 
 class Triangle {
 private:
-  glm::vec3 norm_a, norm_b, norm_c; // Normals at points
-  Material mat_a, mat_b, mat_c;     // Materials at points
+  Material mat_a, mat_b, mat_c; // Materials at points
 
 public:
   glm::vec3 a, b, c; // Points of vector
@@ -26,8 +25,9 @@ public:
    * @param barycentric_coord The position in the triangle
    * @return The shading of the point
    */
-  glm::vec3 phongShading(const std::vector<Light> &lights, const Camera &camera,
-                         glm::vec3 barycentric_coord) const;
+  glm::vec3 phongShading(const std::vector<Light *> &lights,
+                         const Camera &camera,
+                         const glm::vec3 &barycentric_coord) const;
 
   /**
    * Will color vertex points uniformly depending on color and light at each

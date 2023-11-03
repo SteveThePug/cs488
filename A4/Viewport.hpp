@@ -1,3 +1,5 @@
+#pragma once
+
 #include <glm/glm.hpp>
 #include <ostream>
 #include <vector>
@@ -19,5 +21,6 @@ public:
   // Getters for width and height
   int getWidth() const;
   int getHeight() const;
+
   friend std::ostream &operator<<(std::ostream &os, const Viewport &viewport);
 };

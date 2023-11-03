@@ -31,6 +31,6 @@ void OrthographicCamera::updateProjectionMatrix() {
 }
 
 void OrthographicCamera::renderToViewport(Viewport *viewport,
-                                          SceneNode *scene) {
+                                          const SceneNode &scene) {
   return;
 }

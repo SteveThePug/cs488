@@ -78,7 +78,7 @@ vec3 Ray::intersectTriangleBarycentric(const Triangle &tri) const {
   float t = intersectPlaneT(tri.normal, offset);
 
   if (t == 0)
-    return vec3(0.0);
+    return vec3(0);
 
   // Intersection point
   glm::vec3 P = getT(t);
@@ -103,5 +103,5 @@ vec3 Ray::intersectTriangleBarycentric(const Triangle &tri) const {
     return vec3(u, v, w); // The intersection is within the triangle
   }
   // No collision
-  return vec3();
+  return vec3(0);
 }

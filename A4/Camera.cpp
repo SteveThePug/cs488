@@ -23,13 +23,13 @@ void Camera::setTarget(const glm::vec3 &target) {
 void Camera::setUp(const glm::vec3 &up) { this->up = up; }
 
 // Get camera position
-glm::vec3 Camera::getPosition() { return this->position; }
+glm::vec3 Camera::getPosition() const { return this->position; }
 
 // Get target
-glm::vec3 Camera::getTarget() { return this->target; }
+glm::vec3 Camera::getTarget() const { return this->target; }
 
 // Get camera view matrix
-glm::mat4 Camera::getViewMatrix() {
+glm::mat4 Camera::getViewMatrix() const {
   // Implement method
   return this->view_matrix;
 }

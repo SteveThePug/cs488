@@ -30,6 +30,6 @@ void PerspectiveCamera::updateProjectionMatrix() {
 glm::mat4 PerspectiveCamera::getProjectionMatrix() { return projection_matrix; }
 
 void PerspectiveCamera::renderToViewport(Viewport *viewport,
-                                         SceneNode *sceneNode) {
+                                         const SceneNode &sceneNode) {
   return;
 }
