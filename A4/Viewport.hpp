@@ -17,6 +17,10 @@ public:
 
   // Get the color of a specific pixel
   glm::vec3 getPixel(int x, int y) const;
+  // Retrieve a particular component from the viewport
+  glm::vec3 operator()(uint x, uint y) const;
+  // Retrieve address of component from the viewport
+  glm::vec3 &operator()(uint x, uint y);
 
   // Getters for width and height
   int getWidth() const;

@@ -15,5 +15,6 @@ public:
 
   Light();
   Light(glm::vec3 color, glm::vec3 position);
+  void setFalloff(glm::vec3 falloff);
   friend std::ostream &operator<<(std::ostream &out, const Light &l);
 };

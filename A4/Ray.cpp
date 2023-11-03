@@ -73,6 +73,55 @@ tuple<vec3, vec3> Ray::intersectSpherePoints(vec3 position,
   return make_tuple(p0, p1);
 }
 
+tuple<float, float> Ray::intersectCubeT(vec3 position, float radius) const {
+  float tmin = (position.x - radius - origin.x) / direction.x;
+  float tmax = (position.x + radius - origin.x) / direction.x;
+
+  if (tmin > tmax)
+    std::swap(tmin, tmax);
+
+  float tymin = (position.y - radius - origin.y) / direction.y;
+  float tymax = (position.y + radius - origin.y) / direction.y;
+
+  if (tymin > tymax)
+    std::swap(tymin, tymax);
+
+  if ((tmin > tymax) || (tymin > tmax))
+    return make_tuple(0, 0); // No intersection
+
+  if (tymin > tmin)
+    tmin = tymin;
+
+  if (tymax < tmax)
+    tmax = tymax;
+
+  float tzmin = (position.z - radius - origin.z) / direction.z;
+  float tzmax = (position.z + radius - origin.z) / direction.z;
+
+  if (tzmin > tzmax)
+    std::swap(tzmin, tzmax);
+
+  if ((tmin > tzmax) || (tzmin > tmax))
+    return make_tuple(0, 0); // No intersection
+
+  if (tzmin > tmin)
+    tmin = tzmin;
+
+  if (tzmax < tmax)
+    tmax = tzmax;
+
+  return make_tuple(tmin, tmax); // Intersection at tmin and tmax
+}
+
+tuple<vec3, vec3> Ray::intersectCubePoints(vec3 position, float radius) const {
+  tuple<float, float> intersectT = intersectCubeT(position, radius);
+  // If no intersection
+  if (intersectT == make_tuple(0, 0))
+    return make_tuple(vec3(0), vec3(0));
+  // Return intserection points
+  return make_tuple(getT(get<0>(intersectT)), getT(get<1>(intersectT)));
+}
+
 vec3 Ray::intersectTriangleBarycentric(const Triangle &tri) const {
   float offset = -dot(tri.normal, tri.a);
   float t = intersectPlaneT(tri.normal, offset);

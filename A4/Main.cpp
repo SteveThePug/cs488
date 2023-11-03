@@ -2,6 +2,7 @@
 #include "scene_lua.hpp"
 
 #include "A4.hpp"
+#include "Image.hpp"
 #include "PerspectiveCamera.hpp"
 #include "Ray.hpp"
 #include "RayCamera.hpp"
@@ -20,32 +21,40 @@ int main(int argc, char **argv) {
   vec3 cam_pos(0.0f, 0.0f, alpha);
   vec3 cam_tar(0.0f, 0.0f, 0.0f);
   vec3 cam_up(0.0f, 1.0f, 0.0f);
-  int width(10), height(10);
+  int width(1000), height(700);
   float fov(90.0f), aspect((float)width / height);
   vector<Light *> lights{};
   vec3 lht_pos(1.0f, 1.0f, 1.0f);
   vec3 lht_col(1.0f, 1.0f, 1.0f);
   Light light(lht_col, lht_pos);
+  vec3 falloff(1.0f, 0.0f, 0.0f);
+  light.setFalloff(falloff);
   lights.push_back(&light);
   RayCamera camera(fov, aspect, cam_pos, cam_tar, cam_up);
   Viewport viewport(width, height);
 
-  float time = 0;
-  time += 0.001f;
-  vec4 a(1.0f, -1.0f, 0.0f, 1.0f), b(-1.0f, -1.0f, 0.0f, 1.0f),
-      c(0.0f, 1.0f, 0.0, 1.0f);
-  mat4 rotate = glm::rotate(time, vec3(0.0f, 0.0f, 1.0f));
-  a = rotate * a;
-  b = rotate * b;
-  c = rotate * c;
-  vec3 ra(a);
-  vec3 rb(b);
-  vec3 rc(c);
-  Triangle triangle = Triangle(ra, rb, rc);
+  vec3 a(1.0f, -1.0f, 0.0f), b(0.0f, 1.0f, 0.0f), c(-1.0f, -1.0f, 0.0f);
+  Material m_a(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f), 1.0f);
+  Material m_b(glm::vec3(1.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1.0f);
+  Material m_c(glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1.0f);
+  Triangle triangle = Triangle(a, b, c);
+  triangle.m_a = &m_a;
+  triangle.m_b = &m_b;
+  triangle.m_c = &m_c;
   camera.renderTriangleToViewport(&viewport, triangle, lights);
+  Image img(width, height);
+  for (int i = 0; i < width; i++) {
+    for (int j = 0; j < height; ++j) {
+      for (int k = 0; k < 3; k++) {
+        img(i, j, k) = viewport(i, j)[k];
+      }
+    }
+  }
+  img.savePng("test.png");
   cout << viewport;
 
   std::string filename = "simple.lua";
+
   if (argc >= 2) {
     filename = argv[1];
   }

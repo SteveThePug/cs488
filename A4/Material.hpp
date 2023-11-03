@@ -2,8 +2,37 @@
 
 #pragma once
 
+#include <glm/glm.hpp>
+
+#include "Material.hpp"
+
 class Material {
 public:
-  virtual ~Material();
+  static Material m_s;
+
   Material();
+  Material(const glm::vec3 &kd, const glm::vec3 &ks, double shininess);
+  virtual ~Material();
+
+  /** Get diffusion component
+   */
+  glm::vec3 getKd() const;
+
+  /** Get specular component
+   */
+  glm::vec3 getKs() const;
+
+  /** Get shininess
+   */
+  double getShininess() const;
+
+  // Operations
+  Material operator+(const Material &other) const;
+  Material operator*(const float &other) const;
+
+private:
+  glm::vec3 m_kd;
+  glm::vec3 m_ks;
+
+  double m_shininess;
 };

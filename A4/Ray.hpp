@@ -72,6 +72,23 @@ public:
                                                          float radius) const;
 
   /**
+   * Computes where a Ray intersects a Cube
+   * @param position The position of the Cube
+   * @param radius The radius of the Cube
+   * @return The value of t at the intersection, 0 for no intersection
+   */
+  std::tuple<float, float> intersectCubeT(glm::vec3 position,
+                                          float radius) const;
+  /**
+   * Computes where a Ray intersects a Cube
+   * @param position The position of the Cube
+   * @param radius The radius of the Cube
+   * @return The point of the intersection, vec3(0) for no intersection
+   */
+  std::tuple<glm::vec3, glm::vec3> intersectCubePoints(glm::vec3 position,
+                                                       float radius) const;
+
+  /**
    * Ray Triangle intesection
    * @param Ray Incoming ray
    * @return Barycentric cord of the collision

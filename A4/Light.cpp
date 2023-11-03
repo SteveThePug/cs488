@@ -15,6 +15,12 @@ Light::Light(vec3 color, vec3 position) : colour(color), position(position) {
   Light();
 }
 
+void Light::setFalloff(vec3 falloff) {
+  this->falloff[0] = falloff.x;
+  this->falloff[1] = falloff.y;
+  this->falloff[1] = falloff.z;
+}
+
 std::ostream &operator<<(std::ostream &out, const Light &l) {
   out << "L[" << glm::to_string(l.colour) << ", " << glm::to_string(l.position)
       << ", ";
