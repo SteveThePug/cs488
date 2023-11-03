@@ -27,7 +27,10 @@ vec3 Ray::intersectPlanePoint(vec3 normal, float offset) const {
   return getT(t);
 }
 
-tuple<float, float> Ray::intersectSphereT(vec3 position, float radius) const {
+tuple<float, float> Ray::intersectSphereT(const Sphere &sphere) const {
+  vec3 position = sphere.getPosition();
+  double radius = sphere.getRadius();
+
   // Quadratic terms
   vec3 oc = origin - position;
   float a = dot(direction, direction);
@@ -51,9 +54,8 @@ tuple<float, float> Ray::intersectSphereT(vec3 position, float radius) const {
   return make_tuple(t0, t1);
 }
 
-tuple<vec3, vec3> Ray::intersectSpherePoints(vec3 position,
-                                             float radius) const {
-  tuple<float, float> t = intersectSphereT(position, radius);
+tuple<vec3, vec3> Ray::intersectSpherePoints(const Sphere &sphere) const {
+  tuple<float, float> t = intersectSphereT(sphere);
   float t0 = get<0>(t);
   float t1 = get<1>(t);
   vec3 p0;
@@ -73,7 +75,9 @@ tuple<vec3, vec3> Ray::intersectSpherePoints(vec3 position,
   return make_tuple(p0, p1);
 }
 
-tuple<float, float> Ray::intersectCubeT(vec3 position, float radius) const {
+tuple<float, float> Ray::intersectCubeT(const Cube &cube) const {
+  vec3 position = cube.getPosition();
+  double radius = cube.getRadius();
   float tmin = (position.x - radius - origin.x) / direction.x;
   float tmax = (position.x + radius - origin.x) / direction.x;
 
@@ -120,6 +124,24 @@ tuple<vec3, vec3> Ray::intersectCubePoints(vec3 position, float radius) const {
     return make_tuple(vec3(0), vec3(0));
   // Return intserection points
   return make_tuple(getT(get<0>(intersectT)), getT(get<1>(intersectT)));
+}
+
+float Ray::intersectTriangleT(const Triangle &tri) const {
+
+  float offset = -dot(tri.normal, tri.a);
+  float t = intersectPlaneT(tri.normal, offset);
+
+  if (t == 0)
+    return 0;
+
+  // Intersection point
+  glm::vec3 P = getT(t);
+}
+
+vec3 Ray::intersectTrianglePoint(const Triangle &tri) const {
+  float t = intersectTriangleT(tri);
+  if (t == 0)
+    return vec3(0);
 }
 
 vec3 Ray::intersectTriangleBarycentric(const Triangle &tri) const {

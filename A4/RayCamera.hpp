@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Camera.hpp"
-#include "Triangle.hpp"
+#include "Primitive.hpp"
 #include "Viewport.hpp"
 
 class RayCamera : public Camera {

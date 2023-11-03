@@ -10,47 +10,6 @@
 class Primitive {
 public:
   virtual ~Primitive();
-};
-
-class Sphere : public Primitive {
-public:
-  virtual ~Sphere();
-};
-
-class Cube : public Primitive {
-public:
-  virtual ~Cube();
-};
-
-class NonhierSphere : public Primitive {
-public:
-  NonhierSphere(const glm::vec3 &pos, double radius)
-      : m_pos(pos), m_radius(radius) {}
-  virtual ~NonhierSphere();
-
-private:
-  glm::vec3 m_pos;
-  double m_radius;
-};
-
-class NonhierBox : public Primitive {
-public:
-  NonhierBox(const glm::vec3 &pos, double size) : m_pos(pos), m_size(size) {}
-
-  virtual ~NonhierBox();
-
-private:
-  glm::vec3 m_pos;
-  double m_size;
-};
-
-class Triangle {
-public:
-  Material *m_a, *m_b, *m_c; // Material at each vertex
-  glm::vec3 a, b, c;         // Points of vector
-  glm::vec3 normal;          // Normal vector
-  // Constructor
-  Triangle(const glm::vec3 &a, const glm::vec3 &b, const glm::vec3 &c);
 
   // Shading methods
   /**
@@ -82,6 +41,63 @@ public:
   glm::vec3 gouraudShading(const std::vector<Light> &lights,
                            const Camera &camera,
                            glm::vec3 barycentric_coord) const;
+};
+
+class Sphere : public Primitive {
+public:
+  Sphere(const glm::vec3 &pos, double radius) : m_pos(pos), m_radius(radius) {}
+  virtual ~Sphere();
+
+  glm::vec3 getPosition() const;
+  double getRadius() const;
+
+private:
+  glm::vec3 m_pos;
+  double m_radius;
+};
+
+class Cube : public Primitive {
+public:
+  Cube(const glm::vec3 &pos, double radius) : m_pos(pos), m_radius(radius) {}
+  virtual ~Cube();
+
+  glm::vec3 getPosition() const;
+  double getRadius() const;
+
+private:
+  glm::vec3 m_pos;
+  double m_radius;
+};
+
+class NonhierSphere : public Primitive {
+public:
+  NonhierSphere(const glm::vec3 &pos, double radius)
+      : m_pos(pos), m_radius(radius) {}
+  virtual ~NonhierSphere();
+
+private:
+  glm::vec3 m_pos;
+  double m_radius;
+};
+
+class NonhierBox : public Primitive {
+public:
+  NonhierBox(const glm::vec3 &pos, double size) : m_pos(pos), m_size(size) {}
+
+  virtual ~NonhierBox();
+
+private:
+  glm::vec3 m_pos;
+  double m_size;
+};
+
+class Triangle : Primitive {
+public:
+  Material *m_a, *m_b, *m_c; // Material at each vertex
+  glm::vec3 a, b, c;         // Points of vector
+  glm::vec3 normal;          // Normal vector
+  // Constructor
+  Triangle(const glm::vec3 &a, const glm::vec3 &b, const glm::vec3 &c);
 
   // Setters
   void setMaterial(Material *material);

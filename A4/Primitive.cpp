@@ -7,8 +7,12 @@ using namespace std;
 Primitive::~Primitive() {}
 
 Sphere::~Sphere() {}
+glm::vec3 Sphere::getPosition() const { return m_pos; }
+double Sphere::getRadius() const { return m_radius; }
 
 Cube::~Cube() {}
+glm::vec3 Cube::getPosition() const { return m_pos; }
+double Cube::getRadius() const { return m_radius; }
 
 NonhierSphere::~NonhierSphere() {}
 

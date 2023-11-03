@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Triangle.hpp"
+#include "Primitive.hpp"
 #include <glm/glm.hpp>
 #include <optional>
 #include <tuple>
@@ -55,39 +55,44 @@ public:
 
   /**
    * Computes where a Ray intersects a Sphere
-   * @param position The position of the Sphere
-   * @param radius The radius of the Sphere
+   * @param sphere The sphere
    * @return The value of t at the intersection, 0 for no intersection
    */
-  std::tuple<float, float> intersectSphereT(glm::vec3 position,
-                                            float radius) const;
+  std::tuple<float, float> intersectSphereT(const Sphere &sphere) const;
 
   /**
    * Computes where a Ray intersects a Sphere
-   * @param position The position of the Sphere
-   * @param radius The radius of the Sphere
+   * @param sphere The sphere
    * @return The point of the intersection, vec3(0) for no intersection
    */
-  std::tuple<glm::vec3, glm::vec3> intersectSpherePoints(glm::vec3 position,
-                                                         float radius) const;
+  std::tuple<glm::vec3, glm::vec3>
+  intersectSpherePoints(const Sphere &sphere) const;
 
   /**
    * Computes where a Ray intersects a Cube
-   * @param position The position of the Cube
-   * @param radius The radius of the Cube
+   * @param cube The cube
    * @return The value of t at the intersection, 0 for no intersection
    */
-  std::tuple<float, float> intersectCubeT(glm::vec3 position,
-                                          float radius) const;
+  std::tuple<float, float> intersectCubeT(const Cube &cube) const;
   /**
    * Computes where a Ray intersects a Cube
-   * @param position The position of the Cube
-   * @param radius The radius of the Cube
+   * @param cube The cube
    * @return The point of the intersection, vec3(0) for no intersection
    */
-  std::tuple<glm::vec3, glm::vec3> intersectCubePoints(glm::vec3 position,
-                                                       float radius) const;
+  std::tuple<glm::vec3, glm::vec3> intersectCubePoints(const Cube &cube) const;
 
+  /**
+   * Computes where a Ray intersects a Triangle
+   * @param tri The triangle
+   * @return The value of t at the intersection, 0 for no intersection
+   */
+  float intersectTriangleT(const Triangle &tri) const;
+  /**
+   * Computes where a Ray intersects a Triangle
+   * @param tri The triangle
+   * @return The intersection point
+   */
+  glm::vec3 intersectTrianglePoint(const Triangle &tri) const;
   /**
    * Ray Triangle intesection
    * @param Ray Incoming ray

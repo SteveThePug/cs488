@@ -1,4 +1,5 @@
 // Termm--Fall 2023
+#include "Primitive.hpp"
 #include "scene_lua.hpp"
 
 #include "A4.hpp"
@@ -32,7 +33,6 @@ int main(int argc, char **argv) {
   lights.push_back(&light);
   RayCamera camera(fov, aspect, cam_pos, cam_tar, cam_up);
   Viewport viewport(width, height);
-
   vec3 a(1.0f, -1.0f, 0.0f), b(0.0f, 1.0f, 0.0f), c(-1.0f, -1.0f, 0.0f);
   Material m_a(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f), 1.0f);
   Material m_b(glm::vec3(1.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1.0f);
@@ -51,7 +51,6 @@ int main(int argc, char **argv) {
     }
   }
   img.savePng("test.png");
-  cout << viewport;
 
   std::string filename = "simple.lua";
 
