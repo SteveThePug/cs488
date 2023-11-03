@@ -6,10 +6,12 @@ using namespace std;
 
 Primitive::~Primitive() {}
 
+Sphere::Sphere() {}
 Sphere::~Sphere() {}
 glm::vec3 Sphere::getPosition() const { return m_pos; }
 double Sphere::getRadius() const { return m_radius; }
 
+Cube::Cube() {}
 Cube::~Cube() {}
 glm::vec3 Cube::getPosition() const { return m_pos; }
 double Cube::getRadius() const { return m_radius; }
@@ -23,69 +25,38 @@ Triangle::Triangle(const glm::vec3 &a, const glm::vec3 &b, const glm::vec3 &c)
   normal = glm::normalize(glm::cross(b - a, c - a));
   m_a = m_b = m_c = &Material::m_s;
 }
-glm::vec3 Triangle::phongShading(const std::vector<Light *> &lights,
-                                 const Camera &camera,
-                                 const vec3 &barycentric_coord) const {
-  // Check for non - intersection
-  if (barycentric_coord == vec3(0)) {
-    return vec3(0);
-  }
 
-  glm::vec3 color(0.0f); // Resultant color
+glm::vec3 Triangle::barycentricPoint(const glm::vec3 &point,
+                                     const glm::vec3 &edge1,
+                                     const glm::vec3 &edge2,
+                                     const glm::vec3 &ap) const {
+  // Compute vectors (note that we may have already computed these recently)
+  glm::vec3 v0 = edge1, v1 = edge2, v2 = ap;
 
-  // Compute intersection point
-  glm::vec3 point = a * barycentric_coord.x + b * barycentric_coord.y +
-                    c * barycentric_coord.z;
+  // Compute dot products
+  float d00 = glm::dot(edge1, edge1);
+  float d01 = glm::dot(edge1, edge2);
+  float d11 = glm::dot(edge2, edge2);
+  float d20 = glm::dot(ap, edge1);
+  float d21 = glm::dot(ap, edge2);
 
-  // Get material properties
-  // Interpolate properties
-  Material interpolatedMaterial = *m_a * barycentric_coord.x +
-                                  *m_b * barycentric_coord.y +
-                                  *m_c * barycentric_coord.z;
+  // Compute barycentric coordinates
+  float denom = d00 * d11 - d01 * d01;
+  float v = (d11 * d20 - d01 * d21) / denom;
+  float w = (d00 * d21 - d01 * d20) / denom;
+  float u = 1.0f - v - w;
 
-  vec3 camera_pos = camera.getPosition();
-  for (const Light *light : lights) {
-    glm::vec3 light_pos = light->position;
-    // Calculate fragment to light
-    glm::vec3 toLightVec = light_pos - point;
-    // Distance for falloff
-    float distance = glm::length(toLightVec);
-    float falloff = 1.0f / (light->falloff[0] + light->falloff[1] * distance +
-                            light->falloff[2] * distance * distance);
-
-    // Normalise fragment to light
-    glm::vec3 toLight = glm::normalize(toLightVec);
-    // Normalise fragment to camera
-    glm::vec3 toCamera = glm::normalize(camera_pos - point);
-    // n_dot_l
-    float n_dot_l = std::max(glm::dot(normal, toLight), 0.0f);
-
-    // Compute diffuse component
-    glm::vec3 diff = interpolatedMaterial.getKd() * n_dot_l * falloff;
-
-    // Compute specular component (32 in this case would be the shininess)
-    glm::vec3 reflectDir = glm::reflect(-toLight, normal);
-    float spec_intensity =
-        std::pow(std::max(glm::dot(toCamera, reflectDir), 0.0f),
-                 interpolatedMaterial.getShininess()) *
-        falloff;
-    glm::vec3 spec = spec_intensity * interpolatedMaterial.getKs();
-
-    // Change the light color
-    color += diff + spec;
-  }
-  // Clamp the result to [0, 1] range
-  color = glm::clamp(color, 0.0f, 1.0f);
-  return color;
+  // Return the barycentric coordinates
+  return glm::vec3(u, v, w);
 }
-glm::vec3 Triangle::flatShading(const std::vector<Light> &lights) const {
-  return vec3();
+
+glm::vec3 Triangle::barycentricPoint(const glm::vec3 &point) const {
+  // Compute vectors (note that we may have already computed these recently)
+  glm::vec3 v0 = b - a, v1 = c - a, v2 = point - a;
+  return barycentricPoint(point, v0, v1, v2);
 }
-glm::vec3 Triangle::gouraudShading(const std::vector<Light> &lights,
-                                   const Camera &camera,
-                                   glm::vec3 barycentric_coord) const {
-  return vec3();
-}
+
+// Gets triangle normal
 glm::vec3 Triangle::getNormal() const { return normal; }
-
+// Sets material of triangle uniformly
 void Triangle::setMaterial(Material *material) { m_a = m_b = m_c = material; }

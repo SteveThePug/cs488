@@ -31,7 +31,16 @@ public:
    * @param lights Lights in the scene
    */
   void renderTriangleToViewport(Viewport *viewport, const Triangle &tri,
-                                const std::vector<Light *> lights);
+                                const std::vector<Light *> lights) const;
+
+  /** Render a set of primitives to a viewport
+   * @param viewport Viewport to render to
+   * @param tri Triangle to render
+   * @param lights Lights in the scene
+   */
+  void renderTrianglesToViewport(Viewport *viewport,
+                                 const std::vector<Triangle *> &triangles,
+                                 const std::vector<Light *> &lights) const;
 
   /** Render the scene to the viewport
    * @param scene The scene to render

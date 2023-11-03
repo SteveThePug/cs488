@@ -4,7 +4,6 @@
 
 #include "A4.hpp"
 #include "Image.hpp"
-#include "PerspectiveCamera.hpp"
 #include "Ray.hpp"
 #include "RayCamera.hpp"
 #include "Scene.hpp"
@@ -50,7 +49,7 @@ int main(int argc, char **argv) {
       }
     }
   }
-  img.savePng("test.png");
+  img.savePng("test2.png");
 
   std::string filename = "simple.lua";
 

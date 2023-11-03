@@ -3,7 +3,6 @@
 #include <glm/ext.hpp>
 
 #include "A4.hpp"
-#include "PerspectiveCamera.hpp"
 #include "Ray.hpp"
 #include "RayCamera.hpp"
 #include "Scene.hpp"

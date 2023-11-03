@@ -117,8 +117,8 @@ tuple<float, float> Ray::intersectCubeT(const Cube &cube) const {
   return make_tuple(tmin, tmax); // Intersection at tmin and tmax
 }
 
-tuple<vec3, vec3> Ray::intersectCubePoints(vec3 position, float radius) const {
-  tuple<float, float> intersectT = intersectCubeT(position, radius);
+tuple<vec3, vec3> Ray::intersectCubePoints(const Cube &cube) const {
+  tuple<float, float> intersectT = intersectCubeT(cube);
   // If no intersection
   if (intersectT == make_tuple(0, 0))
     return make_tuple(vec3(0), vec3(0));
@@ -127,52 +127,176 @@ tuple<vec3, vec3> Ray::intersectCubePoints(vec3 position, float radius) const {
 }
 
 float Ray::intersectTriangleT(const Triangle &tri) const {
-
   float offset = -dot(tri.normal, tri.a);
   float t = intersectPlaneT(tri.normal, offset);
-
+  // Ray is parralel with plane
   if (t == 0)
     return 0;
-
-  // Intersection point
+  // Get point on plane of intersection
   glm::vec3 P = getT(t);
+  // Calculate edge vectors
+  glm::vec3 edge1 = tri.b - tri.a;
+  glm::vec3 edge2 = tri.c - tri.b;
+  glm::vec3 edge3 = tri.a - tri.c;
+  // A,B,C to intersection
+  glm::vec3 ap = P - tri.a;
+  glm::vec3 bp = P - tri.b;
+  glm::vec3 cp = P - tri.c;
+  // Calculate cross products
+  float test1 = glm::dot(glm::cross(edge1, ap), tri.normal);
+  float test2 = glm::dot(glm::cross(edge2, bp), tri.normal);
+  float test3 = glm::dot(glm::cross(edge3, cp), tri.normal);
+  if (test1 >= 0 && test2 >= 0 && test3 >= 0) {
+    return t;
+  }
+  return 0;
 }
 
 vec3 Ray::intersectTrianglePoint(const Triangle &tri) const {
-  float t = intersectTriangleT(tri);
+  float offset = -dot(tri.normal, tri.a);
+  float t = intersectPlaneT(tri.normal, offset);
+  // Ray is parralel with plane
   if (t == 0)
     return vec3(0);
+  // Get point on plane of intersection
+  glm::vec3 P = getT(t);
+  // Calculate edge vectors
+  glm::vec3 edge1 = tri.b - tri.a;
+  glm::vec3 edge2 = tri.c - tri.b;
+  glm::vec3 edge3 = tri.a - tri.c;
+  // A,B,C to intersection
+  glm::vec3 ap = P - tri.a;
+  glm::vec3 bp = P - tri.b;
+  glm::vec3 cp = P - tri.c;
+  // Calculate cross products
+  float test1 = glm::dot(glm::cross(edge1, ap), tri.normal);
+  float test2 = glm::dot(glm::cross(edge2, bp), tri.normal);
+  float test3 = glm::dot(glm::cross(edge3, cp), tri.normal);
+  if (test1 >= 0 && test2 >= 0 && test3 >= 0) {
+    return P;
+  }
+  return vec3(0);
 }
 
 vec3 Ray::intersectTriangleBarycentric(const Triangle &tri) const {
   float offset = -dot(tri.normal, tri.a);
   float t = intersectPlaneT(tri.normal, offset);
-
+  // Ray is parralel with plane
   if (t == 0)
     return vec3(0);
-
-  // Intersection point
+  // Get point on plane of intersection
   glm::vec3 P = getT(t);
-  // Edge vectors
+  // Calculate edge vectors
   glm::vec3 edge1 = tri.b - tri.a;
-  glm::vec3 edge2 = tri.c - tri.a;
-  // A to intersection
-  glm::vec3 vp = P - tri.a;
-  // Dot products
-  float dot00 = dot(edge1, edge1);
-  float dot01 = dot(edge1, edge2);
-  float dot02 = dot(edge1, vp);
-  float dot11 = dot(edge2, edge2);
-  float dot12 = dot(edge2, vp);
-  // Compute barycentric coords
-  float invDenom = 1.0f / (dot00 * dot11 - dot01 * dot01);
-  float u = (dot11 * dot02 - dot01 * dot12) * invDenom;
-  float v = (dot00 * dot12 - dot01 * dot02) * invDenom;
-  float w = 1 - u - v;
-  // Check we lie in the triangle
-  if ((u >= 0) && (v >= 0) && (u + v <= 1)) {
-    return vec3(u, v, w); // The intersection is within the triangle
+  glm::vec3 edge2 = tri.c - tri.b;
+  glm::vec3 edge3 = tri.a - tri.c;
+  // A,B,C to intersection
+  glm::vec3 ap = P - tri.a;
+  glm::vec3 bp = P - tri.b;
+  glm::vec3 cp = P - tri.c;
+  // Calculate cross products
+  float test1 = glm::dot(glm::cross(edge1, ap), tri.normal);
+  float test2 = glm::dot(glm::cross(edge2, bp), tri.normal);
+  float test3 = glm::dot(glm::cross(edge3, cp), tri.normal);
+  if (test1 >= 0 && test2 >= 0 && test3 >= 0) {
+    return tri.barycentricPoint(P, edge1, edge2, ap);
   }
-  // No collision
   return vec3(0);
+}
+
+glm::vec3 Ray::phongShading(const std::vector<Light *> &lights,
+                            const Camera &camera, const vec3 &point,
+                            const vec3 &normal, const Material &mat) const {
+  vec3 color(0.0f);
+
+  vec3 camera_pos = camera.getPosition();
+  for (const Light *light : lights) {
+    glm::vec3 light_pos = light->position;
+    // Calculate fragment to light
+    glm::vec3 toLightVec = light_pos - point;
+    // Distance for falloff
+    float distance = glm::length(toLightVec);
+    float falloff = 1.0f / (light->falloff[0] + light->falloff[1] * distance +
+                            light->falloff[2] * distance * distance);
+
+    // Normalise fragment to light
+    glm::vec3 toLight = glm::normalize(toLightVec);
+    // Normalise fragment to camera
+    glm::vec3 toCamera = glm::normalize(camera_pos - point);
+    // n_dot_l
+    float n_dot_l = std::max(glm::dot(normal, toLight), 0.0f);
+
+    // Compute diffuse component
+    glm::vec3 diff = mat.getKd() * n_dot_l * falloff;
+
+    // Compute specular component (32 in this case would be the shininess)
+    glm::vec3 reflectDir = glm::reflect(-toLight, normal);
+    float spec_intensity =
+        std::pow(std::max(glm::dot(toCamera, reflectDir), 0.0f),
+                 mat.getShininess()) *
+        falloff;
+    glm::vec3 spec = spec_intensity * mat.getKs();
+
+    // Change the light color
+    color += diff + spec;
+  }
+  // Clamp the result to [0, 1] range
+  color = glm::clamp(color, 0.0f, 1.0f);
+  return color;
+}
+
+glm::vec3 Ray::phongShading(const std::vector<Light *> &lights,
+                            const Camera &camera, const vec3 &barycentric_coord,
+                            const Triangle &tri) const {
+  // Check for non - intersection
+  if (barycentric_coord == vec3(0)) {
+    return vec3(0);
+  }
+
+  glm::vec3 color(0.0f); // Resultant color
+
+  // Compute intersection point
+  glm::vec3 point = tri.a * barycentric_coord.x + tri.b * barycentric_coord.y +
+                    tri.c * barycentric_coord.z;
+
+  // Get material properties
+  // Interpolate properties
+  Material interpolatedMaterial = *tri.m_a * barycentric_coord.x +
+                                  *tri.m_b * barycentric_coord.y +
+                                  *tri.m_c * barycentric_coord.z;
+
+  vec3 camera_pos = camera.getPosition();
+  for (const Light *light : lights) {
+    glm::vec3 light_pos = light->position;
+    // Calculate fragment to light
+    glm::vec3 toLightVec = light_pos - point;
+    // Distance for falloff
+    float distance = glm::length(toLightVec);
+    float falloff = 1.0f / (light->falloff[0] + light->falloff[1] * distance +
+                            light->falloff[2] * distance * distance);
+
+    // Normalise fragment to light
+    glm::vec3 toLight = glm::normalize(toLightVec);
+    // Normalise fragment to camera
+    glm::vec3 toCamera = glm::normalize(camera_pos - point);
+    // n_dot_l
+    float n_dot_l = std::max(glm::dot(tri.normal, toLight), 0.0f);
+
+    // Compute diffuse component
+    glm::vec3 diff = interpolatedMaterial.getKd() * n_dot_l * falloff;
+
+    // Compute specular component (32 in this case would be the shininess)
+    glm::vec3 reflectDir = glm::reflect(-toLight, tri.normal);
+    float spec_intensity =
+        std::pow(std::max(glm::dot(toCamera, reflectDir), 0.0f),
+                 interpolatedMaterial.getShininess()) *
+        falloff;
+    glm::vec3 spec = spec_intensity * interpolatedMaterial.getKs();
+
+    // Change the light color
+    color += diff + spec;
+  }
+  // Clamp the result to [0, 1] range
+  color = glm::clamp(color, 0.0f, 1.0f);
+  return color;
 }
