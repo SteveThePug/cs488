@@ -52,11 +52,6 @@ public:
    */
   glm::mat4 getViewMatrix() const;
 
-  /** Render the scene to a viewport
-   * @param scene The scene to render
-   */
-  virtual void renderToViewport(Viewport *viewport, const SceneNode &scene) = 0;
-
   // Updates
   /** Generates a projection matrix based on field variables */
   void updateViewMatrix();

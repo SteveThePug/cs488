@@ -48,17 +48,22 @@ void A4_Render(
   std::cout << "\t}" << std::endl;
   std::cout << ")" << std::endl;
 
-  size_t h = image.height();
-  size_t w = image.width();
+  size_t height = image.height();
+  size_t width = image.width();
 
-  for (uint y = 0; y < h; ++y) {
-    for (uint x = 0; x < w; ++x) {
-      // Red:
-      image(x, y, 0) = (double)1.0;
-      // Green:
-      image(x, y, 1) = (double)1.0;
-      // Blue:
-      image(x, y, 2) = (double)1.0;
+  float aspect = (float)width / height;
+  RayCamera camera(fovy, aspect, eye, view, up);
+
+  Viewport viewport(width, height);
+
+  // We need to construct our *prims using *root
+  camera.renderPrimitivesToViewport(&viewport, prims, lights);
+
+  for (int i = 0; i < width; i++) {
+    for (int j = 0; j < height; ++j) {
+      for (int k = 0; k < 3; k++) {
+        image(i, j, k) = viewport(i, j)[k];
+      }
     }
   }
 }

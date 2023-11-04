@@ -17,12 +17,13 @@
 
 // A polygonal mesh.
 class Mesh : public Primitive {
-public:
-  Mesh(const std::string &fname);
-
 private:
   std::vector<glm::vec3> m_vertices;
   std::vector<Triangle> m_faces;
 
+public:
+  Mesh(const std::string &fname);
+  glm::vec3 intersectRay(const Ray &ray) const override;
+  glm::vec3 getNormal(const glm::vec3 &intersect) const override;
   friend std::ostream &operator<<(std::ostream &out, const Mesh &mesh);
 };

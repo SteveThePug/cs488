@@ -11,7 +11,7 @@ RayCamera::RayCamera(float fov, float aspect, glm::vec3 position,
 // This will need to be altered, to render a scene to a viewport
 void RayCamera::renderTriangleToViewport(
     Viewport *viewport, const Triangle &tri,
-    const std::vector<Light *> lights) const {
+    const std::list<Light *> lights) const {
   int width = viewport->getWidth();
   int height = viewport->getHeight();
   float h_fov_radians = glm::radians(fov); // Yes
@@ -44,9 +44,9 @@ void RayCamera::renderTriangleToViewport(
   }
 }
 
-void RayCamera::renderTrianglesToViewport(
-    Viewport *viewport, const std::vector<Triangle *> &triangles,
-    const std::vector<Light *> &lights) const {
+void RayCamera::renderPrimitivesToViewport(
+    Viewport *viewport, const std::list<Primitive *> &primitives,
+    const std::list<Light *> &lights) const {
   // Calculate change in angle
   int width = viewport->getWidth();
   int height = viewport->getHeight();
@@ -68,11 +68,17 @@ void RayCamera::renderTrianglesToViewport(
       vec3 hor_change = (i - width / 2.0f) * d_hor_vec;
       vec3 ver_change = (j - height / 2.0f) * d_vert_vec;
       vec3 direction = cam_to_target + ver_change + hor_change;
+
       Ray ray(position, direction);
-      for (const Triangle *tri : triangles) {
-        vec3 intersect = ray.intersectTriangleBarycentric(*tri);
+
+      for (const Primitive *prim : primitives) {
+
+        vec3 intersect = prim->intersectRay(ray);
         if (intersect != vec3(0)) {
-          viewport->setPixel(i, j, tri->phongShading(lights, *this, intersect));
+          vec3 normal = prim->getNormal(intersect);
+          viewport->setPixel(i, j,
+                             ray.phongShading(lights, *this, intersect, normal,
+                                              prim->getMaterial()));
         } else {
           viewport->setPixel(i, j, vec3(0, 0, 0));
         }

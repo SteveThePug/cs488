@@ -61,7 +61,14 @@ public:
   std::tuple<float, float> intersectSphereT(const Sphere &sphere) const;
 
   /**
-   * Computes where a Ray intersects a Sphere
+   * Computers the first point where a Ray intersects a sphere
+   * @param sphere the sphere
+   * @return the single point of intersection
+   */
+  glm::vec3 intersectSpherePoint(const Sphere &sphere) const;
+
+  /**
+   * Computes both points where a Ray intersects a Sphere
    * @param sphere The sphere
    * @return The point of the intersection, vec3(0) for no intersection
    */
@@ -74,10 +81,18 @@ public:
    * @return The value of t at the intersection, 0 for no intersection
    */
   std::tuple<float, float> intersectCubeT(const Cube &cube) const;
+
+  /**
+   * Computes fist point where ray intersects cube
+   * @param cube The cube
+   * @return The point of the intersection, vec3(0) for no intersection
+   */
+  glm::vec3 intersectCubePoint(const Cube &cube) const;
+
   /**
    * Computes where a Ray intersects a Cube
    * @param cube The cube
-   * @return The point of the intersection, vec3(0) for no intersection
+   * @return The points of the intersection, vec3(0) for no intersection
    */
   std::tuple<glm::vec3, glm::vec3> intersectCubePoints(const Cube &cube) const;
 
@@ -110,9 +125,9 @@ public:
    * @param material The material of the intersection point
    * @return The color of the fragment
    */
-  glm::vec3 phongShading(const std::vector<Light *> &lights,
-                         const Camera &camera, const glm::vec3 &point,
-                         const glm::vec3 &normal, const Material &mat) const;
+  glm::vec3 phongShading(const std::list<Light *> &lights, const Camera &camera,
+                         const glm::vec3 &point, const glm::vec3 &normal,
+                         const Material &mat) const;
 
   /**
    * Phong shading for Barycentric point on a triangle
@@ -122,8 +137,7 @@ public:
    * @param triangle The triangle that is being intersected
    * @return The color of the fragment
    */
-  glm::vec3 phongShading(const std::vector<Light *> &lights,
-                         const Camera &camera,
+  glm::vec3 phongShading(const std::list<Light *> &lights, const Camera &camera,
                          const glm::vec3 &barycentric_coord,
                          const Triangle &tri) const;
 };

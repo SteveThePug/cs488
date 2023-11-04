@@ -37,3 +37,25 @@ std::ostream &operator<<(std::ostream &out, const Mesh &mesh) {
   out << "}";
   return out;
 }
+
+glm::vec3 Mesh::intersectRay(const Ray &ray) const {
+  glm::vec3 intersect = glm::vec3(0);
+
+  for (const Triangle &tri : m_faces) {
+    intersect = tri.intersectRay(ray);
+
+    if (intersect != glm::vec3(0)) {
+      return intersect;
+    }
+  }
+
+  return glm::vec3(0);
+}
+
+glm::vec3 Mesh::getNormal(const glm::vec3 &intersect) const {
+  for (const Triangle &tri : m_faces) {
+    if (tri.pointLiesInPlane(intersect))
+      return tri.normal;
+  }
+  return glm::vec3(0);
+}

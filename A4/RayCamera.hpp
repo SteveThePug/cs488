@@ -31,20 +31,14 @@ public:
    * @param lights Lights in the scene
    */
   void renderTriangleToViewport(Viewport *viewport, const Triangle &tri,
-                                const std::vector<Light *> lights) const;
+                                const std::list<Light *> lights) const;
 
   /** Render a set of primitives to a viewport
    * @param viewport Viewport to render to
-   * @param tri Triangle to render
+   * @param primitives Primitives to render
    * @param lights Lights in the scene
    */
-  void renderTrianglesToViewport(Viewport *viewport,
-                                 const std::vector<Triangle *> &triangles,
-                                 const std::vector<Light *> &lights) const;
-
-  /** Render the scene to the viewport
-   * @param scene The scene to render
-   * @returns Viewport width x height pixel array
-   */
-  void renderToViewport(Viewport *viewport, const SceneNode &scene) override;
+  void renderPrimitivesToViewport(Viewport *viewport,
+                                  const std::list<Primitive *> &primitives,
+                                  const std::list<Light *> &lights) const;
 };

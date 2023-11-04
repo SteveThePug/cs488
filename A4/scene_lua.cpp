@@ -209,7 +209,7 @@ extern "C" int gr_nh_sphere_cmd(lua_State *L) {
 
   double radius = luaL_checknumber(L, 3);
 
-  data->node = new GeometryNode(name, new NonhierSphere(pos, radius));
+  data->node = new GeometryNode(name, new Sphere(pos, radius));
 
   luaL_getmetatable(L, "gr.node");
   lua_setmetatable(L, -2);
@@ -229,9 +229,9 @@ extern "C" int gr_nh_box_cmd(lua_State *L) {
   glm::vec3 pos;
   get_tuple(L, 2, &pos[0], 3);
 
-  double size = luaL_checknumber(L, 3);
+  double radius = luaL_checknumber(L, 3);
 
-  data->node = new GeometryNode(name, new NonhierBox(pos, size));
+  data->node = new GeometryNode(name, new Cube(pos, radius));
 
   luaL_getmetatable(L, "gr.node");
   lua_setmetatable(L, -2);
@@ -280,14 +280,15 @@ extern "C" int gr_light_cmd(lua_State *L) {
 
   Light l;
 
-  double col[3];
-  get_tuple(L, 1, &l.position[0], 3);
-  get_tuple(L, 2, col, 3);
-  get_tuple(L, 3, l.falloff, 3);
+  glm::vec3 position(0);
+  glm::vec3 color(0);
+  glm::vec3 falloff(0);
 
-  l.colour = glm::vec3(col[0], col[1], col[2]);
+  get_tuple(L, 1, &position[0], 3);
+  get_tuple(L, 2, &color[0], 3);
+  get_tuple(L, 3, &falloff[0], 3);
 
-  data->light = new Light(l);
+  data->light = new Light(position, color, falloff);
 
   luaL_newmetatable(L, "gr.light");
   lua_setmetatable(L, -2);
