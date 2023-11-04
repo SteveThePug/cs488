@@ -10,10 +10,8 @@
 class Ray;
 
 class Primitive {
-protected:
-  Material &mat;
-
 public:
+  Material &mat;
   // Constructors
   Primitive();
   virtual ~Primitive();
@@ -25,6 +23,7 @@ public:
   // Getters
   virtual glm::vec3 getNormal(const glm::vec3 &intersect) const = 0;
   Material &getMaterial() const;
+  friend std::ostream &operator<<(std::ostream &out, const Primitive &p);
 };
 
 class Sphere : public Primitive {

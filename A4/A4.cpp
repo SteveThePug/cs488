@@ -64,6 +64,10 @@ void A4_Render(
     prims.push_back(geomp->m_primitive);
   }
 
+  for (Primitive *prim : prims) {
+    std::cout << "\t\t" << prim << std::endl;
+  }
+
   // We need to construct our *prims using *root
   camera.renderPrimitivesToViewport(&viewport, prims, lights);
 

@@ -7,6 +7,12 @@
 #include "Material.hpp"
 
 class Material {
+private:
+  glm::vec3 m_kd;
+  glm::vec3 m_ks;
+
+  double m_shininess;
+
 public:
   static Material m_s;
 
@@ -30,9 +36,5 @@ public:
   Material operator+(const Material &other) const;
   Material operator*(const float &other) const;
 
-private:
-  glm::vec3 m_kd;
-  glm::vec3 m_ks;
-
-  double m_shininess;
+  friend std::ostream &operator<<(std::ostream &out, const Primitive &p);
 };

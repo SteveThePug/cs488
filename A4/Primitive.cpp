@@ -14,6 +14,10 @@ Primitive::Primitive(Material &material) : mat(material) {}
 Primitive::~Primitive() {}
 void Primitive::setMaterial(Material &mat) { this->mat = mat; }
 Material &Primitive::getMaterial() const { return mat; }
+std::ostream &operator<<(std::ostream &out, const Primitive &p) {
+  out << "M[" << p.mat << "]";
+  return out;
+}
 
 /**
  * Sphere definitions
