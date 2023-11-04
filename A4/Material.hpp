@@ -3,6 +3,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <ostream>
 
 #include "Material.hpp"
 
@@ -36,5 +37,5 @@ public:
   Material operator+(const Material &other) const;
   Material operator*(const float &other) const;
 
-  friend std::ostream &operator<<(std::ostream &out, const Primitive &p);
+  friend std::ostream &operator<<(std::ostream &out, const Material &m);
 };

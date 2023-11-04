@@ -28,3 +28,8 @@ Material Material::operator*(const float &other) const {
   double shininess = m_shininess * other;
   return Material(f_kd, f_ks, shininess);
 }
+
+std::ostream &operator<<(std::ostream &out, const Material &m) {
+  out << "KD[" << glm::to_string(m.m_kd) << "]";
+  return out;
+}
