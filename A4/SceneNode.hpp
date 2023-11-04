@@ -30,9 +30,9 @@ public:
 
   void add_child(SceneNode *child);
 
-  std::set<SceneNode *> get_geometryNodes();
-
   void remove_child(SceneNode *child);
+
+  std::set<SceneNode *> get_geometryNodes();
 
   //-- Transformations:
   void rotate(char axis, float angle);

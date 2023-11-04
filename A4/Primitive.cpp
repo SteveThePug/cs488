@@ -12,7 +12,7 @@ using namespace std;
 Primitive::Primitive() : mat(Material::m_s) {}
 Primitive::Primitive(Material &material) : mat(material) {}
 Primitive::~Primitive() {}
-void Primitive::setMaterial(const Material &mat) { this->mat = mat; }
+void Primitive::setMaterial(Material &mat) { this->mat = mat; }
 Material &Primitive::getMaterial() const { return mat; }
 
 /**

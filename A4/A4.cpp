@@ -3,13 +3,14 @@
 #include <glm/ext.hpp>
 
 #include "A4.hpp"
+#include "GeometryNode.hpp"
 #include "Ray.hpp"
 #include "RayCamera.hpp"
 #include "Scene.hpp"
 #include <fstream>
 #include <iostream>
-using std::ofstream;
 
+using namespace std;
 using namespace glm;
 
 void A4_Render(
@@ -55,6 +56,13 @@ void A4_Render(
   RayCamera camera(fovy, aspect, eye, view, up);
 
   Viewport viewport(width, height);
+
+  set<SceneNode *> geoms = root->get_geometryNodes();
+  list<Primitive *> prims;
+  for (SceneNode *geom : geoms) {
+    GeometryNode *geomp = static_cast<GeometryNode *>(geom);
+    prims.push_back(geomp->m_primitive);
+  }
 
   // We need to construct our *prims using *root
   camera.renderPrimitivesToViewport(&viewport, prims, lights);

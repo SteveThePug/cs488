@@ -21,7 +21,7 @@ public:
   // Functional
   virtual glm::vec3 intersectRay(const Ray &ray) const = 0;
   // Setters
-  void setMaterial(const Material &mat);
+  void setMaterial(Material &mat);
   // Getters
   virtual glm::vec3 getNormal(const glm::vec3 &intersect) const = 0;
   Material &getMaterial() const;
