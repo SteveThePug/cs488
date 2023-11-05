@@ -26,6 +26,12 @@ void A4_Render(
     const glm::vec3 &ambient, const std::list<Light *> &lights) {
 
   // Fill in raytracing code here...
+  set<SceneNode *> geoms = root->get_geometryNodes();
+  list<Primitive *> prims;
+  for (SceneNode *geom : geoms) {
+    GeometryNode *geomp = static_cast<GeometryNode *>(geom);
+    prims.push_back(&geomp->m_primitive);
+  }
   std::cout << "F23: Calling A4_Render(\n"
             << "\t" << *root << "\t"
             << "Image(width:" << image.width() << ", height:" << image.height()
@@ -47,6 +53,12 @@ void A4_Render(
     std::cout << "\t\t" << *light << std::endl;
   }
   std::cout << "\t}" << std::endl;
+  std::cout << "\t"
+            << "primitives{" << std::endl;
+  for (Primitive *prim : prims) {
+    std::cout << "\t\t" << *prim << std::endl;
+  }
+  std::cout << "\t}" << std::endl;
   std::cout << ")" << std::endl;
 
   size_t height = image.height();
@@ -57,24 +69,13 @@ void A4_Render(
 
   Viewport viewport(width, height);
 
-  set<SceneNode *> geoms = root->get_geometryNodes();
-  list<Primitive *> prims;
-  for (SceneNode *geom : geoms) {
-    GeometryNode *geomp = static_cast<GeometryNode *>(geom);
-    prims.push_back(geomp->m_primitive);
-  }
-
-  for (Primitive *prim : prims) {
-    std::cout << "\t\t" << prim << std::endl;
-  }
-
   // We need to construct our *prims using *root
   camera.renderPrimitivesToViewport(&viewport, prims, lights);
 
   for (int i = 0; i < width; i++) {
     for (int j = 0; j < height; ++j) {
       for (int k = 0; k < 3; k++) {
-        image(i, j, k) = viewport(i, j)[k];
+        image(i, j, k) = viewport.getPixel(i, j)[k];
       }
     }
   }

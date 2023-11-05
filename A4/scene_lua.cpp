@@ -171,7 +171,8 @@ extern "C" int gr_sphere_cmd(lua_State *L) {
   data->node = 0;
 
   const char *name = luaL_checkstring(L, 1);
-  data->node = new GeometryNode(name, new Sphere());
+
+  data->node = new GeometryNode(name, *(new Sphere()));
 
   luaL_getmetatable(L, "gr.node");
   lua_setmetatable(L, -2);
@@ -187,7 +188,8 @@ extern "C" int gr_cube_cmd(lua_State *L) {
   data->node = 0;
 
   const char *name = luaL_checkstring(L, 1);
-  data->node = new GeometryNode(name, new Cube());
+
+  data->node = new GeometryNode(name, *(new Cube()));
 
   luaL_getmetatable(L, "gr.node");
   lua_setmetatable(L, -2);
@@ -208,8 +210,8 @@ extern "C" int gr_nh_sphere_cmd(lua_State *L) {
   get_tuple(L, 2, &pos[0], 3);
 
   double radius = luaL_checknumber(L, 3);
-
-  data->node = new GeometryNode(name, new Sphere(pos, radius));
+  Sphere *sphere = new Sphere(pos, radius);
+  data->node = new GeometryNode(name, *sphere);
 
   luaL_getmetatable(L, "gr.node");
   lua_setmetatable(L, -2);
@@ -230,8 +232,8 @@ extern "C" int gr_nh_box_cmd(lua_State *L) {
   get_tuple(L, 2, &pos[0], 3);
 
   double radius = luaL_checknumber(L, 3);
-
-  data->node = new GeometryNode(name, new Cube(pos, radius));
+  Cube *cube = new Cube(pos, radius);
+  data->node = new GeometryNode(name, *cube);
 
   luaL_getmetatable(L, "gr.node");
   lua_setmetatable(L, -2);
@@ -263,7 +265,7 @@ extern "C" int gr_mesh_cmd(lua_State *L) {
     mesh = i->second;
   }
 
-  data->node = new GeometryNode(name, mesh);
+  data->node = new GeometryNode(name, *mesh);
 
   luaL_getmetatable(L, "gr.node");
   lua_setmetatable(L, -2);

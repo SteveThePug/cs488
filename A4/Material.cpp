@@ -1,5 +1,6 @@
 // Termm--Fall 2023
 #include "Material.hpp"
+#include <glm/ext.hpp>
 
 Material Material::m_s = Material();
 
@@ -30,6 +31,7 @@ Material Material::operator*(const float &other) const {
 }
 
 std::ostream &operator<<(std::ostream &out, const Material &m) {
-  out << "KD[" << glm::to_string(m.m_kd) << "]";
+  out << "KD[" << glm::to_string(m.m_kd) << "], KS[" << glm::to_string(m.m_ks)
+      << "], SH[" << m.m_shininess << "]";
   return out;
 }

@@ -22,8 +22,8 @@ public:
    * @param up up vector for camera
    * @returns RayCamera the camera
    */
-  RayCamera(float fov, float aspect, glm::vec3 position, glm::vec3 target,
-            glm::vec3 up);
+  RayCamera(float fov, float aspect, glm::vec3 position, glm::vec3 view,
+            glm::vec3 up, bool target = false);
 
   /** Temporary function to render a triangle to a viewport
    * @param viewport Viewport to render to

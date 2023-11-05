@@ -1,8 +1,8 @@
 #include "Ray.hpp"
 #include <cstddef>
+#include <glm/ext.hpp>
 using namespace glm;
 using namespace std;
-using std::max;
 
 Ray::Ray(const vec3 &origin, const vec3 &direction) : origin(origin) {
   this->direction = normalize(direction);
@@ -178,6 +178,9 @@ vec3 Ray::intersectTrianglePoint(const Triangle &tri) const {
     return vec3(0);
   // Get point on plane of intersection
   vec3 P = getT(t);
+  if (!tri.inBoundingBox(P)) {
+    return vec3(0);
+  }
   // Calculate edge vectors
   vec3 edge1 = tri.b - tri.a;
   vec3 edge2 = tri.c - tri.b;
@@ -260,15 +263,6 @@ vec3 Ray::phongShading(const list<Light *> &lights, const Camera &camera,
       float n_dot_h = glm::max(dot(normal, h), 0.0f);
       specular = ks * pow(n_dot_h, shininess) * falloff;
     }
-    // // Compute specular component (32 in this case would be the shininess)
-    // vec3 reflectDir = reflect(-toLight, normal);
-    // float spec_intensity =
-    //     pow(std::max(dot(toCamera, reflectDir), 0.0f),
-    //              mat.getShininess()) *
-    //     falloff;
-    // vec3 spec = spec_intensity * light_color * mat.getKs();
-
-    // Change the light color
     color += light_color * (diffuse + specular);
   }
   // Clamp the result to [0, 1] range

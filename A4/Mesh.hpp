@@ -25,5 +25,6 @@ public:
   Mesh(const std::string &fname);
   glm::vec3 intersectRay(const Ray &ray) const override;
   glm::vec3 getNormal(const glm::vec3 &intersect) const override;
+  void print(std::ostream &out) const override;
   friend std::ostream &operator<<(std::ostream &out, const Mesh &mesh);
 };

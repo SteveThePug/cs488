@@ -13,7 +13,7 @@ Mesh::Mesh(const std::string &fname) : m_vertices(), m_faces() {
   double vx, vy, vz;
   size_t s1, s2, s3;
 
-  std::ifstream ifs(fname.c_str());
+  std::ifstream ifs(("Assets/" + fname).c_str());
   while (ifs >> code) {
     if (code == "v") {
       ifs >> vx >> vy >> vz;
@@ -26,6 +26,11 @@ Mesh::Mesh(const std::string &fname) : m_vertices(), m_faces() {
       m_faces.push_back(Triangle(*a, *b, *c));
     }
   }
+}
+
+void Mesh::print(std::ostream &out) const {
+  out << "Mesh: "
+      << "M[" << *mat << "]";
 }
 
 std::ostream &operator<<(std::ostream &out, const Mesh &mesh) {

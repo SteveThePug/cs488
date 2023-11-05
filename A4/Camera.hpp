@@ -7,7 +7,7 @@
 class Camera {
 protected:
   glm::vec3 position;    // Position of camera in world space
-  glm::vec3 target;      // Direction camera is looking
+  glm::vec3 view;        // Direction camera is looking
   glm::vec3 up;          // Up vector
   glm::mat4 view_matrix; // Calculated view matrix
 
@@ -18,7 +18,8 @@ public:
    * @param target target camera is looking at
    * @param up up vector
    */
-  Camera(glm::vec3 position, glm::vec3 target, glm::vec3 up);
+  Camera(glm::vec3 position, glm::vec3 viewORtarget, glm::vec3 up,
+         bool target = false);
 
   // Setters
   /** Set camera position
@@ -29,7 +30,7 @@ public:
   /** Set camera orientation
    * @param orientation Camera's orientation
    */
-  void setTarget(const glm::vec3 &target);
+  void setView(const glm::vec3 &view, bool target = false);
 
   /** Set the up vector
    * @param up The up vector
@@ -46,7 +47,7 @@ public:
    * returns camera's target
    * @return camera target
    */
-  glm::vec3 getTarget() const;
+  glm::vec3 getView() const;
   /** returns camera view matrix
    * @return view matrix
    */

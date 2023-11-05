@@ -8,11 +8,10 @@
 
 class GeometryNode : public SceneNode {
 public:
-  GeometryNode(const std::string &name, Primitive *prim);
-  GeometryNode(const std::string &name, Primitive *prim, Material *mat);
+  Primitive &m_primitive;
 
-  void setMaterial(Material *material);
+  GeometryNode(const std::string &name, Primitive &prim);
+  GeometryNode(const std::string &name, Primitive &prim, Material *mat);
 
-  Material *m_material;
-  Primitive *m_primitive;
+  void setMaterial(Material *mat);
 };

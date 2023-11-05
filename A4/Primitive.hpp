@@ -11,19 +11,28 @@ class Ray;
 
 class Primitive {
 public:
-  Material &mat;
+  // Field variables
+  Material *mat;
+  // Bounding box
+  glm::vec3 bounding_bln;
+  glm::vec3 bounding_trf;
   // Constructors
   Primitive();
+  Primitive(Material *material);
   virtual ~Primitive();
-  explicit Primitive(Material &material);
   // Functional
+  bool inBoundingBox(glm::vec3 point) const;
+  void updateBoundingBox();
+  virtual void print(std::ostream &out) const;
+  friend std::ostream &operator<<(std::ostream &out, const Primitive &p);
   virtual glm::vec3 intersectRay(const Ray &ray) const = 0;
   // Setters
-  void setMaterial(Material &mat);
+  void setMaterial(Material *mat);
   // Getters
+  glm::vec3 getBottomLeftNear() const;
+  glm::vec3 getTopRightFar() const;
+  Material *getMaterial() const;
   virtual glm::vec3 getNormal(const glm::vec3 &intersect) const = 0;
-  Material &getMaterial() const;
-  friend std::ostream &operator<<(std::ostream &out, const Primitive &p);
 };
 
 class Sphere : public Primitive {
@@ -35,10 +44,12 @@ public:
   // Constructors
   Sphere();
   Sphere(const glm::vec3 &pos, const double &radius);
-  Sphere(const glm::vec3 &pos, const double &radius, Material &material);
+  Sphere(const glm::vec3 &pos, const double &radius, Material *material);
   virtual ~Sphere();
   // Functional
   glm::vec3 intersectRay(const Ray &ray) const override;
+  virtual void print(std::ostream &out) const override;
+  void updateBoundingBox();
   // Getters
   glm::vec3 getPosition() const;
   glm::vec3 getNormal(const glm::vec3 &intersect) const override;
@@ -54,14 +65,16 @@ public:
   // Constructors
   Cube();
   Cube(const glm::vec3 &pos, const double &radius);
-  Cube(const glm::vec3 &pos, const double &radius, Material &material);
+  Cube(const glm::vec3 &pos, const double &radius, Material *material);
   virtual ~Cube();
   // Functional
   glm::vec3 intersectRay(const Ray &ray) const override;
+  void updateBoundingBox();
   // Getters
   glm::vec3 getPosition() const;
   glm::vec3 getNormal(const glm::vec3 &intersect) const override;
   double getRadius() const;
+  virtual void print(std::ostream &out) const override;
 };
 
 class Triangle : public Primitive {
@@ -77,20 +90,19 @@ public:
   // Functional
   glm::vec3 intersectRay(const Ray &ray) const override;
   bool pointLiesInPlane(const glm::vec3 &point) const;
+  void updateBoundingBox();
 
-  /**
-   * Convert known point on plane to barycentric coords using possibly computed
-   * variables
-   */
+  // Convert known point on plane to barycentric coords using possibly computed
+  // variables
   glm::vec3 barycentricPoint(const glm::vec3 &point, const glm::vec3 &edge1,
                              const glm::vec3 &edge2, const glm::vec3 &ap) const;
-  /**
-   * Convert known point on plane to barycentric coords
-   */
+  // Convert known point on plane to barycentric coords
   glm::vec3 barycentricPoint(const glm::vec3 &point) const;
 
+  virtual void print(std::ostream &out) const override;
+
   // Setters
-  void setMaterial(Material &material);
+  void setMaterial(Material *material);
   // Getters
   glm::vec3 getNormal() const;
   glm::vec3 getNormal(const glm::vec3 &intersect) const override;
