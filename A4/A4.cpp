@@ -26,12 +26,14 @@ void A4_Render(
     const glm::vec3 &ambient, const std::list<Light *> &lights) {
 
   // Fill in raytracing code here...
+  // Get all geometryNodes
   set<SceneNode *> geoms = root->get_geometryNodes();
   list<Primitive *> prims;
   for (SceneNode *geom : geoms) {
     GeometryNode *geomp = static_cast<GeometryNode *>(geom);
     prims.push_back(&geomp->m_primitive);
   }
+
   std::cout << "F23: Calling A4_Render(\n"
             << "\t" << *root << "\t"
             << "Image(width:" << image.width() << ", height:" << image.height()
@@ -67,10 +69,15 @@ void A4_Render(
   float aspect = (float)width / height;
   RayCamera camera(fovy, aspect, eye, view, up);
 
+  // Sort by distance from camera
+  prims.sort([&camera](Primitive *a, Primitive *b) {
+    return Primitive::distanceToCamera(*a, *b, camera.getPosition());
+  });
+
   Viewport viewport(width, height);
 
   // We need to construct our *prims using *root
-  camera.renderPrimitivesToViewport(&viewport, prims, lights);
+  camera.renderPrimitivesToViewport(&viewport, prims, lights, false);
 
   for (int i = 0; i < width; i++) {
     for (int j = 0; j < height; ++j) {
