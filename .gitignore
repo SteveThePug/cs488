@@ -1,6 +1,8 @@
-<<<<<<< HEAD
 # Prerequisites
 *.d
+compile_commands*
+*/Assets/backup
+.*
 
 # Compiled Object files
 *.slo
@@ -31,7 +33,6 @@
 *.exe
 *.out
 *.app
-=======
 /Makefile
 A*/Makefile
 Index_Example*/Makefile
@@ -39,8 +40,8 @@ Instanced_Example*/Makefile
 shared/glfw**/Makefile
 shared/imgui**/Makefile
 
+# Builds
 build
-
 *.a
 *.o
 *.swp
@@ -64,7 +65,4 @@ A3_[Ss]olution/A3
 A4/A4
 A4_[Ss]olution/A4
 
-*compile_commands*
 
-*/Assets/backup
->>>>>>> master
