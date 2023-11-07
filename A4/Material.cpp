@@ -2,8 +2,6 @@
 #include "Material.hpp"
 #include <glm/ext.hpp>
 
-Material Material::m_s = Material();
-
 Material::Material()
     : m_kd(1.0f, 1.0f, 1.0f), m_ks(1.0f, 1.0f, 1.0f), m_shininess(1.0f) {}
 

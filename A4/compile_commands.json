@@ -1,85 +1,79 @@
 [
           {
-            "directory": "/home/adam/OneDrive/coding/cs488/A4/build",
-            "file": "/home/adam/OneDrive/coding/cs488/A4/A4.cpp",
-            "command": "cc -MD -MP -DNDEBUG -I/home/adam/OneDrive/coding/cs488/shared -I/home/adam/OneDrive/coding/cs488/shared/include -I/home/adam/OneDrive/coding/cs488/shared/gl3w -I/home/adam/OneDrive/coding/cs488/shared/imgui -O2 -std=c++20 -o /home/adam/OneDrive/coding/cs488/A4/build/Release/A4.o -MF /home/adam/OneDrive/coding/cs488/A4/build/Release/A4.d -c /home/adam/OneDrive/coding/cs488/A4/A4.cpp"
+            "directory": "/home/adam/OneDrive/coding/github/cs488/A4(new)/build",
+            "file": "/home/adam/OneDrive/coding/github/cs488/A4(new)/A4.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/coding/github/cs488/shared -I/home/adam/OneDrive/coding/github/cs488/shared/include -I/home/adam/OneDrive/coding/github/cs488/shared/gl3w -I/home/adam/OneDrive/coding/github/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/A4.o -MF /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/A4.d -c /home/adam/OneDrive/coding/github/cs488/A4(new)/A4.cpp"
           }
 ,
           {
-            "directory": "/home/adam/OneDrive/coding/cs488/A4/build",
-            "file": "/home/adam/OneDrive/coding/cs488/A4/GeometryNode.cpp",
-            "command": "cc -MD -MP -DNDEBUG -I/home/adam/OneDrive/coding/cs488/shared -I/home/adam/OneDrive/coding/cs488/shared/include -I/home/adam/OneDrive/coding/cs488/shared/gl3w -I/home/adam/OneDrive/coding/cs488/shared/imgui -O2 -std=c++20 -o /home/adam/OneDrive/coding/cs488/A4/build/Release/GeometryNode.o -MF /home/adam/OneDrive/coding/cs488/A4/build/Release/GeometryNode.d -c /home/adam/OneDrive/coding/cs488/A4/GeometryNode.cpp"
+            "directory": "/home/adam/OneDrive/coding/github/cs488/A4(new)/build",
+            "file": "/home/adam/OneDrive/coding/github/cs488/A4(new)/GeometryNode.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/coding/github/cs488/shared -I/home/adam/OneDrive/coding/github/cs488/shared/include -I/home/adam/OneDrive/coding/github/cs488/shared/gl3w -I/home/adam/OneDrive/coding/github/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/GeometryNode.o -MF /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/GeometryNode.d -c /home/adam/OneDrive/coding/github/cs488/A4(new)/GeometryNode.cpp"
           }
 ,
           {
-            "directory": "/home/adam/OneDrive/coding/cs488/A4/build",
-            "file": "/home/adam/OneDrive/coding/cs488/A4/Image.cpp",
-            "command": "cc -MD -MP -DNDEBUG -I/home/adam/OneDrive/coding/cs488/shared -I/home/adam/OneDrive/coding/cs488/shared/include -I/home/adam/OneDrive/coding/cs488/shared/gl3w -I/home/adam/OneDrive/coding/cs488/shared/imgui -O2 -std=c++20 -o /home/adam/OneDrive/coding/cs488/A4/build/Release/Image.o -MF /home/adam/OneDrive/coding/cs488/A4/build/Release/Image.d -c /home/adam/OneDrive/coding/cs488/A4/Image.cpp"
+            "directory": "/home/adam/OneDrive/coding/github/cs488/A4(new)/build",
+            "file": "/home/adam/OneDrive/coding/github/cs488/A4(new)/Image.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/coding/github/cs488/shared -I/home/adam/OneDrive/coding/github/cs488/shared/include -I/home/adam/OneDrive/coding/github/cs488/shared/gl3w -I/home/adam/OneDrive/coding/github/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/Image.o -MF /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/Image.d -c /home/adam/OneDrive/coding/github/cs488/A4(new)/Image.cpp"
           }
 ,
           {
-            "directory": "/home/adam/OneDrive/coding/cs488/A4/build",
-            "file": "/home/adam/OneDrive/coding/cs488/A4/JointNode.cpp",
-            "command": "cc -MD -MP -DNDEBUG -I/home/adam/OneDrive/coding/cs488/shared -I/home/adam/OneDrive/coding/cs488/shared/include -I/home/adam/OneDrive/coding/cs488/shared/gl3w -I/home/adam/OneDrive/coding/cs488/shared/imgui -O2 -std=c++20 -o /home/adam/OneDrive/coding/cs488/A4/build/Release/JointNode.o -MF /home/adam/OneDrive/coding/cs488/A4/build/Release/JointNode.d -c /home/adam/OneDrive/coding/cs488/A4/JointNode.cpp"
+            "directory": "/home/adam/OneDrive/coding/github/cs488/A4(new)/build",
+            "file": "/home/adam/OneDrive/coding/github/cs488/A4(new)/JointNode.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/coding/github/cs488/shared -I/home/adam/OneDrive/coding/github/cs488/shared/include -I/home/adam/OneDrive/coding/github/cs488/shared/gl3w -I/home/adam/OneDrive/coding/github/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/JointNode.o -MF /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/JointNode.d -c /home/adam/OneDrive/coding/github/cs488/A4(new)/JointNode.cpp"
           }
 ,
           {
-            "directory": "/home/adam/OneDrive/coding/cs488/A4/build",
-            "file": "/home/adam/OneDrive/coding/cs488/A4/Light.cpp",
-            "command": "cc -MD -MP -DNDEBUG -I/home/adam/OneDrive/coding/cs488/shared -I/home/adam/OneDrive/coding/cs488/shared/include -I/home/adam/OneDrive/coding/cs488/shared/gl3w -I/home/adam/OneDrive/coding/cs488/shared/imgui -O2 -std=c++20 -o /home/adam/OneDrive/coding/cs488/A4/build/Release/Light.o -MF /home/adam/OneDrive/coding/cs488/A4/build/Release/Light.d -c /home/adam/OneDrive/coding/cs488/A4/Light.cpp"
+            "directory": "/home/adam/OneDrive/coding/github/cs488/A4(new)/build",
+            "file": "/home/adam/OneDrive/coding/github/cs488/A4(new)/Light.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/coding/github/cs488/shared -I/home/adam/OneDrive/coding/github/cs488/shared/include -I/home/adam/OneDrive/coding/github/cs488/shared/gl3w -I/home/adam/OneDrive/coding/github/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/Light.o -MF /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/Light.d -c /home/adam/OneDrive/coding/github/cs488/A4(new)/Light.cpp"
           }
 ,
           {
-            "directory": "/home/adam/OneDrive/coding/cs488/A4/build",
-            "file": "/home/adam/OneDrive/coding/cs488/A4/Main.cpp",
-            "command": "cc -MD -MP -DNDEBUG -I/home/adam/OneDrive/coding/cs488/shared -I/home/adam/OneDrive/coding/cs488/shared/include -I/home/adam/OneDrive/coding/cs488/shared/gl3w -I/home/adam/OneDrive/coding/cs488/shared/imgui -O2 -std=c++20 -o /home/adam/OneDrive/coding/cs488/A4/build/Release/Main.o -MF /home/adam/OneDrive/coding/cs488/A4/build/Release/Main.d -c /home/adam/OneDrive/coding/cs488/A4/Main.cpp"
+            "directory": "/home/adam/OneDrive/coding/github/cs488/A4(new)/build",
+            "file": "/home/adam/OneDrive/coding/github/cs488/A4(new)/Main.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/coding/github/cs488/shared -I/home/adam/OneDrive/coding/github/cs488/shared/include -I/home/adam/OneDrive/coding/github/cs488/shared/gl3w -I/home/adam/OneDrive/coding/github/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/Main.o -MF /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/Main.d -c /home/adam/OneDrive/coding/github/cs488/A4(new)/Main.cpp"
           }
 ,
           {
-            "directory": "/home/adam/OneDrive/coding/cs488/A4/build",
-            "file": "/home/adam/OneDrive/coding/cs488/A4/Material.cpp",
-            "command": "cc -MD -MP -DNDEBUG -I/home/adam/OneDrive/coding/cs488/shared -I/home/adam/OneDrive/coding/cs488/shared/include -I/home/adam/OneDrive/coding/cs488/shared/gl3w -I/home/adam/OneDrive/coding/cs488/shared/imgui -O2 -std=c++20 -o /home/adam/OneDrive/coding/cs488/A4/build/Release/Material.o -MF /home/adam/OneDrive/coding/cs488/A4/build/Release/Material.d -c /home/adam/OneDrive/coding/cs488/A4/Material.cpp"
+            "directory": "/home/adam/OneDrive/coding/github/cs488/A4(new)/build",
+            "file": "/home/adam/OneDrive/coding/github/cs488/A4(new)/Material.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/coding/github/cs488/shared -I/home/adam/OneDrive/coding/github/cs488/shared/include -I/home/adam/OneDrive/coding/github/cs488/shared/gl3w -I/home/adam/OneDrive/coding/github/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/Material.o -MF /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/Material.d -c /home/adam/OneDrive/coding/github/cs488/A4(new)/Material.cpp"
           }
 ,
           {
-            "directory": "/home/adam/OneDrive/coding/cs488/A4/build",
-            "file": "/home/adam/OneDrive/coding/cs488/A4/Mesh.cpp",
-            "command": "cc -MD -MP -DNDEBUG -I/home/adam/OneDrive/coding/cs488/shared -I/home/adam/OneDrive/coding/cs488/shared/include -I/home/adam/OneDrive/coding/cs488/shared/gl3w -I/home/adam/OneDrive/coding/cs488/shared/imgui -O2 -std=c++20 -o /home/adam/OneDrive/coding/cs488/A4/build/Release/Mesh.o -MF /home/adam/OneDrive/coding/cs488/A4/build/Release/Mesh.d -c /home/adam/OneDrive/coding/cs488/A4/Mesh.cpp"
+            "directory": "/home/adam/OneDrive/coding/github/cs488/A4(new)/build",
+            "file": "/home/adam/OneDrive/coding/github/cs488/A4(new)/Mesh.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/coding/github/cs488/shared -I/home/adam/OneDrive/coding/github/cs488/shared/include -I/home/adam/OneDrive/coding/github/cs488/shared/gl3w -I/home/adam/OneDrive/coding/github/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/Mesh.o -MF /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/Mesh.d -c /home/adam/OneDrive/coding/github/cs488/A4(new)/Mesh.cpp"
           }
 ,
           {
-            "directory": "/home/adam/OneDrive/coding/cs488/A4/build",
-            "file": "/home/adam/OneDrive/coding/cs488/A4/PhongMaterial.cpp",
-            "command": "cc -MD -MP -DNDEBUG -I/home/adam/OneDrive/coding/cs488/shared -I/home/adam/OneDrive/coding/cs488/shared/include -I/home/adam/OneDrive/coding/cs488/shared/gl3w -I/home/adam/OneDrive/coding/cs488/shared/imgui -O2 -std=c++20 -o /home/adam/OneDrive/coding/cs488/A4/build/Release/PhongMaterial.o -MF /home/adam/OneDrive/coding/cs488/A4/build/Release/PhongMaterial.d -c /home/adam/OneDrive/coding/cs488/A4/PhongMaterial.cpp"
+            "directory": "/home/adam/OneDrive/coding/github/cs488/A4(new)/build",
+            "file": "/home/adam/OneDrive/coding/github/cs488/A4(new)/PhongMaterial.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/coding/github/cs488/shared -I/home/adam/OneDrive/coding/github/cs488/shared/include -I/home/adam/OneDrive/coding/github/cs488/shared/gl3w -I/home/adam/OneDrive/coding/github/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/PhongMaterial.o -MF /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/PhongMaterial.d -c /home/adam/OneDrive/coding/github/cs488/A4(new)/PhongMaterial.cpp"
           }
 ,
           {
-            "directory": "/home/adam/OneDrive/coding/cs488/A4/build",
-            "file": "/home/adam/OneDrive/coding/cs488/A4/Primitive.cpp",
-            "command": "cc -MD -MP -DNDEBUG -I/home/adam/OneDrive/coding/cs488/shared -I/home/adam/OneDrive/coding/cs488/shared/include -I/home/adam/OneDrive/coding/cs488/shared/gl3w -I/home/adam/OneDrive/coding/cs488/shared/imgui -O2 -std=c++20 -o /home/adam/OneDrive/coding/cs488/A4/build/Release/Primitive.o -MF /home/adam/OneDrive/coding/cs488/A4/build/Release/Primitive.d -c /home/adam/OneDrive/coding/cs488/A4/Primitive.cpp"
+            "directory": "/home/adam/OneDrive/coding/github/cs488/A4(new)/build",
+            "file": "/home/adam/OneDrive/coding/github/cs488/A4(new)/Primitive.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/coding/github/cs488/shared -I/home/adam/OneDrive/coding/github/cs488/shared/include -I/home/adam/OneDrive/coding/github/cs488/shared/gl3w -I/home/adam/OneDrive/coding/github/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/Primitive.o -MF /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/Primitive.d -c /home/adam/OneDrive/coding/github/cs488/A4(new)/Primitive.cpp"
           }
 ,
           {
-            "directory": "/home/adam/OneDrive/coding/cs488/A4/build",
-            "file": "/home/adam/OneDrive/coding/cs488/A4/Ray.cpp",
-            "command": "cc -MD -MP -DNDEBUG -I/home/adam/OneDrive/coding/cs488/shared -I/home/adam/OneDrive/coding/cs488/shared/include -I/home/adam/OneDrive/coding/cs488/shared/gl3w -I/home/adam/OneDrive/coding/cs488/shared/imgui -O2 -std=c++20 -o /home/adam/OneDrive/coding/cs488/A4/build/Release/Ray.o -MF /home/adam/OneDrive/coding/cs488/A4/build/Release/Ray.d -c /home/adam/OneDrive/coding/cs488/A4/Ray.cpp"
+            "directory": "/home/adam/OneDrive/coding/github/cs488/A4(new)/build",
+            "file": "/home/adam/OneDrive/coding/github/cs488/A4(new)/SceneNode.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/coding/github/cs488/shared -I/home/adam/OneDrive/coding/github/cs488/shared/include -I/home/adam/OneDrive/coding/github/cs488/shared/gl3w -I/home/adam/OneDrive/coding/github/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/SceneNode.o -MF /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/SceneNode.d -c /home/adam/OneDrive/coding/github/cs488/A4(new)/SceneNode.cpp"
           }
 ,
           {
-            "directory": "/home/adam/OneDrive/coding/cs488/A4/build",
-            "file": "/home/adam/OneDrive/coding/cs488/A4/SceneNode.cpp",
-            "command": "cc -MD -MP -DNDEBUG -I/home/adam/OneDrive/coding/cs488/shared -I/home/adam/OneDrive/coding/cs488/shared/include -I/home/adam/OneDrive/coding/cs488/shared/gl3w -I/home/adam/OneDrive/coding/cs488/shared/imgui -O2 -std=c++20 -o /home/adam/OneDrive/coding/cs488/A4/build/Release/SceneNode.o -MF /home/adam/OneDrive/coding/cs488/A4/build/Release/SceneNode.d -c /home/adam/OneDrive/coding/cs488/A4/SceneNode.cpp"
+            "directory": "/home/adam/OneDrive/coding/github/cs488/A4(new)/build",
+            "file": "/home/adam/OneDrive/coding/github/cs488/A4(new)/polyroots.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/coding/github/cs488/shared -I/home/adam/OneDrive/coding/github/cs488/shared/include -I/home/adam/OneDrive/coding/github/cs488/shared/gl3w -I/home/adam/OneDrive/coding/github/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/polyroots.o -MF /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/polyroots.d -c /home/adam/OneDrive/coding/github/cs488/A4(new)/polyroots.cpp"
           }
 ,
           {
-            "directory": "/home/adam/OneDrive/coding/cs488/A4/build",
-            "file": "/home/adam/OneDrive/coding/cs488/A4/polyroots.cpp",
-            "command": "cc -MD -MP -DNDEBUG -I/home/adam/OneDrive/coding/cs488/shared -I/home/adam/OneDrive/coding/cs488/shared/include -I/home/adam/OneDrive/coding/cs488/shared/gl3w -I/home/adam/OneDrive/coding/cs488/shared/imgui -O2 -std=c++20 -o /home/adam/OneDrive/coding/cs488/A4/build/Release/polyroots.o -MF /home/adam/OneDrive/coding/cs488/A4/build/Release/polyroots.d -c /home/adam/OneDrive/coding/cs488/A4/polyroots.cpp"
-          }
-,
-          {
-            "directory": "/home/adam/OneDrive/coding/cs488/A4/build",
-            "file": "/home/adam/OneDrive/coding/cs488/A4/scene_lua.cpp",
-            "command": "cc -MD -MP -DNDEBUG -I/home/adam/OneDrive/coding/cs488/shared -I/home/adam/OneDrive/coding/cs488/shared/include -I/home/adam/OneDrive/coding/cs488/shared/gl3w -I/home/adam/OneDrive/coding/cs488/shared/imgui -O2 -std=c++20 -o /home/adam/OneDrive/coding/cs488/A4/build/Release/scene_lua.o -MF /home/adam/OneDrive/coding/cs488/A4/build/Release/scene_lua.d -c /home/adam/OneDrive/coding/cs488/A4/scene_lua.cpp"
+            "directory": "/home/adam/OneDrive/coding/github/cs488/A4(new)/build",
+            "file": "/home/adam/OneDrive/coding/github/cs488/A4(new)/scene_lua.cpp",
+            "command": "cc -MD -MP -DDEBUG -I/home/adam/OneDrive/coding/github/cs488/shared -I/home/adam/OneDrive/coding/github/cs488/shared/include -I/home/adam/OneDrive/coding/github/cs488/shared/gl3w -I/home/adam/OneDrive/coding/github/cs488/shared/imgui -g -std=c++14 -o /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/scene_lua.o -MF /home/adam/OneDrive/coding/github/cs488/A4(new)/build/Debug/scene_lua.d -c /home/adam/OneDrive/coding/github/cs488/A4(new)/scene_lua.cpp"
           }
 ]

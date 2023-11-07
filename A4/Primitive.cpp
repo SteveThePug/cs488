@@ -1,37 +1,66 @@
 // Termm--Fall 2023
+
 #include "Primitive.hpp"
-#include "Ray.hpp"
-#include <cstddef>
-#include <glm/ext.hpp>
-using namespace glm;
-using namespace std;
+#include "Material.hpp"
+#include "glm/gtx/string_cast.hpp"
+#include <glm/glm.hpp>
+#include <iostream>
 
 /**
  * Primitive definitions
+ * -----------------------------------------------------------------------------
  */
-Primitive::Primitive() : Primitive(&Material::m_s) { updateBoundingBox(); }
-Primitive::Primitive(Material *material) {
-  this->mat = material;
-  updateBoundingBox();
-}
+Material Primitive::static_mat = Material();
+
+Primitive::Primitive() : mat(&Primitive::static_mat) {}
+Primitive::Primitive(Material *material) : mat(material) {}
+
 Primitive::~Primitive() {}
-// Setters
-void Primitive::setMaterial(Material *mat) { this->mat = mat; }
-void Primitive::updateBoundingBox() {
-  bounding_bln = vec3(-1.0f);
-  bounding_trf = vec3(1.0f);
-}
-bool Primitive::inBoundingBox(glm::vec3 point) const {
+
+bool Primitive::pointInBoundingBox(const glm::vec3 &point) const {
   return (point.x >= bounding_bln.x && point.x <= bounding_trf.x) &&
          (point.y >= bounding_bln.y && point.y <= bounding_trf.y) &&
          (point.z >= bounding_bln.z && point.z <= bounding_trf.z);
 }
-// Getters
-Material *Primitive::getMaterial() const { return mat; }
-glm::vec3 Primitive::getBottomLeftNear() const { return bounding_bln; }
-glm::vec3 Primitive::getTopRightFar() const { return bounding_trf; }
-// Functional
-void Primitive::print(std::ostream &out) const { out << "M[" << *mat << "]"; }
+
+bool Primitive::rayIntersectBoundingBox(const glm::vec3 &position,
+                                        const glm::vec3 &direction) const {
+
+  glm::vec3 invDir = 1.0f / direction; // element-wise inverse
+
+  glm::vec3 t0 = (bounding_bln - position) * invDir;
+  glm::vec3 t1 = (bounding_trf - position) * invDir;
+
+  glm::vec3 tmin = glm::min(t0, t1);
+  glm::vec3 tmax = glm::max(t0, t1);
+
+  float tminMax = glm::max(glm::max(tmin.x, tmin.y), tmin.z);
+  float tmaxMin = glm::min(glm::min(tmax.x, tmax.y), tmax.z);
+
+  // If tmaxMin < 0, the bounding box is behind the ray
+  if (tmaxMin < 0) {
+    return false;
+  }
+
+  // If tminMax > tmaxMin, there is no intersection
+  if (tminMax > tmaxMin) {
+    return false;
+  }
+
+  // There is an intersection
+  return true;
+}
+
+float Primitive::distanceToPoint(const glm::vec3 &point) const {
+  glm::vec3 center = (bounding_bln + bounding_trf) * 0.5f;
+  return glm::distance(center, point);
+}
+
+void Primitive::print(std::ostream &out) const {
+  out << "Mat[" << *mat << "]";
+  return;
+}
+
 std::ostream &operator<<(std::ostream &out, const Primitive &p) {
   p.print(out);
   return out;
@@ -39,74 +68,144 @@ std::ostream &operator<<(std::ostream &out, const Primitive &p) {
 
 /**
  * Sphere definitions
+ * -----------------------------------------------------------------------------
  */
-Sphere::Sphere() : Primitive(), m_pos(0.0, 0.0, 0.0), m_radius(0.5) {
+Sphere::Sphere() : Primitive(), pos(0.0, 0.0, 0.0), radius(0.5) {
   updateBoundingBox();
 }
 Sphere::Sphere(const glm::vec3 &position, const double &radius)
-    : Primitive(), m_pos(position), m_radius(radius) {
+    : Primitive(), pos(position), radius(radius) {
   updateBoundingBox();
 }
 Sphere::Sphere(const glm::vec3 &position, const double &radius,
                Material *material)
-    : Primitive(material), m_pos(position), m_radius(radius) {
+    : Sphere(position, radius) {
+  mat = material;
   updateBoundingBox();
 }
 Sphere::~Sphere() {}
-// Functional
-glm::vec3 Sphere::intersectRay(const Ray &ray) const {
-  return ray.intersectSpherePoint(*this);
+
+void Sphere::print(std::ostream &out) const {
+  out << "Sphere: ";
+  out << "Mat[" << *mat << "], ";
+  out << "Pos[" << glm::to_string(pos) << "], ";
+  out << "Rad[" << radius << "], ";
+  out << "BLN[" << glm::to_string(bounding_bln) << "], ";
+  out << "TRF[" << glm::to_string(bounding_trf) << "]";
+}
+
+glm::vec3 Sphere::intersectRay(const glm::vec3 &position,
+                               const glm::vec3 &direction) const {
+  glm::vec3 L = pos - position;
+
+  // Quadratic terms
+  float a = glm::dot(direction, direction);
+  float b = -2.0f * glm::dot(L, direction);
+  float c = glm::dot(L, L) - radius * radius;
+
+  // No solution due to negative determinant implies no intersection
+  float discriminant = b * b - 4 * a * c;
+  if (discriminant < 0) {
+    return glm::vec3(0); // No real roots, the ray does not intersect the sphere
+  }
+
+  // Calculate the two solutions using the quadratic formula
+  float sqrtDiscriminant = sqrt(discriminant);
+  float t0 = (-b - sqrtDiscriminant) / (2.0f * a);
+  float t1 = (-b + sqrtDiscriminant) / (2.0f * a);
+
+  // Select the smallest positive t
+  float t;
+  if (t0 > 0 && t1 > 0) {
+    t = glm::min(t0, t1);
+  } else if (t0 > 0) {
+    t = t0;
+  } else if (t1 > 0) {
+    t = t1;
+  } else {
+    return glm::vec3(0); // Both t0 and t1 are negative
+  }
+  glm::vec3 intersection = position + direction * t;
+  return intersection;
 }
 glm::vec3 Sphere::getNormal(const glm::vec3 &intersect) const {
-  glm::vec3 normal = intersect - m_pos;
+  glm::vec3 normal = intersect - pos;
   normal = glm::normalize(normal);
   return normal;
 }
+Primitive *Sphere::copy() { return new Sphere(pos, radius, mat); }
+
 void Sphere::updateBoundingBox() {
-  glm::vec3 radiusVec(m_radius);
-  bounding_bln = m_pos - radiusVec;
-  bounding_trf = m_pos + radiusVec;
-}
-glm::vec3 Sphere::getPosition() const { return m_pos; }
-double Sphere::getRadius() const { return m_radius; }
-void Sphere::print(std::ostream &out) const {
-  out << "Sphere: "
-      << "M[" << *mat << "]";
+  glm::vec3 radiusVec(radius);
+  bounding_bln = pos - radiusVec;
+  bounding_trf = pos + radiusVec;
 }
 
 /**
- * Cube Definitions
+ * Cube definitions   ---------------------------------------------
  */
-Cube::Cube() : Primitive(), m_pos(0.0f, 0.0f, 0.0f), m_radius(1.0f) {
+Cube::Cube() : Primitive(), pos(0.0f, 0.0f, 0.0f), radius(1.0f) {
   updateBoundingBox();
 }
-Cube::Cube(const glm::vec3 &position, const double &radius)
-    : Primitive(), m_pos(position), m_radius(radius) {
+Cube::Cube(const glm::vec3 &pos, const double &radius)
+    : pos(pos), radius(radius) {
   updateBoundingBox();
 }
-Cube::Cube(const glm::vec3 &position, const double &radius, Material *material)
-    : Primitive(material), m_pos(position), m_radius(radius) {
+Cube::Cube(const glm::vec3 &pos, const double &radius, Material *material)
+    : Cube(pos, radius) {
   updateBoundingBox();
+  mat = material;
 }
 Cube::~Cube() {}
-glm::vec3 Cube::intersectRay(const Ray &ray) const {
-  return ray.intersectCubePoint(*this);
+
+void Cube::print(std::ostream &out) const {
+  out << "Cube: ";
+  out << "Mat[" << *mat << "], ";
+  out << "Pos[" << glm::to_string(pos) << "], ";
+  out << "Rad[" << radius << "]";
 }
-glm::vec3 Cube::getPosition() const { return m_pos; }
-double Cube::getRadius() const { return m_radius; }
-glm::vec3 Cube::getNormal(const vec3 &intersect) const {
-  glm::vec3 diff = intersect - m_pos;
 
-  glm::vec3 normalized_diff = glm::abs(diff) / static_cast<float>(m_radius);
+glm::vec3 Cube::intersectRay(const glm::vec3 &position,
+                             const glm::vec3 &direction) const {
+  glm::vec3 invDir = 1.0f / direction;
+  glm::vec3 t0 = ((pos - glm::vec3(radius)) - position) * invDir;
+  glm::vec3 t1 = ((pos + glm::vec3(radius)) - position) * invDir;
 
+  glm::vec3 tmin = glm::min(t0, t1);
+  glm::vec3 tmax = glm::max(t0, t1);
+
+  float tMin = std::max(tmin.x, tmin.y);
+  float tMax = std::min(tmax.x, tmax.y);
+  tMin = std::max(tMin, tmin.z);
+  tMax = std::min(tMax, tmax.z);
+
+  // If tMax < 0, the cube is behind the ray
+  if (tMax < 0) {
+    glm::vec3(0);
+  }
+
+  // If tMin > tMax, there is no intersection
+  if (tMin > tMax) {
+    glm::vec3(0);
+  }
+
+  if (tMin < 0) {
+    return position + tMax * direction; // Use tMax to get the exit point
+  }
+  return position + tMin * direction;
+}
+
+glm::vec3 Cube::getNormal(const glm::vec3 &intersect) const {
+  glm::vec3 diff = intersect - pos;
+  glm::vec3 normalized_diff = glm::abs(diff) / static_cast<float>(radius);
   glm::vec3 normal(0.0f);
 
   // Find the maximum component of the normalized difference
   float max_component = std::max(std::max(normalized_diff.x, normalized_diff.y),
                                  normalized_diff.z);
 
-  // Based on the maximum component, decide the normal. It's either pointing in
-  // the positive or negative direction of the axis that had the highest
+  // Based on the maximum component, decide the normal. It's either pointing
+  // in the positive or negative direction of the axis that had the highest
   // normalized difference.
   if (max_component == normalized_diff.x) {
     normal.x = (diff.x > 0) ? 1.0f : -1.0f;
@@ -118,108 +217,92 @@ glm::vec3 Cube::getNormal(const vec3 &intersect) const {
 
   return normal;
 }
+Primitive *Cube::copy() { return new Cube(pos, radius, mat); }
 void Cube::updateBoundingBox() {
-  glm::vec3 radiusVec(m_radius);
-  bounding_bln = m_pos - radiusVec;
-  bounding_trf = m_pos + radiusVec;
-}
-void Cube::print(std::ostream &out) const {
-  out << "Cube: "
-      << "M[" << *mat << "]";
+  glm::vec3 radiusVec(radius);
+  bounding_bln = pos - 1.01f * radiusVec;
+  bounding_trf = pos + 1.01f * radiusVec;
 }
 
-/**
- * Triangle Definitions
- */
-Triangle::Triangle()
-    : Primitive(), a(1.0f, -1.0f, 0.0f), b(0.0f, 1.0f, 0.0f),
-      c(-1.0f, -1.0f, 0.0f) {
+Triangle::Triangle(glm::vec3 a, glm::vec3 b, glm::vec3 c) : a(a), b(b), c(c) {
+  updateNormal();
   updateBoundingBox();
 }
-Triangle::Triangle(const glm::vec3 &a, const glm::vec3 &b, const glm::vec3 &c)
-    : Primitive(), a(a), b(b), c(c) {
-  normal = glm::normalize(glm::cross(b - a, c - a));
+Triangle::Triangle(glm::vec3 a, glm::vec3 b, glm::vec3 c, Material *material)
+    : a(a), b(b), c(c) {
+  mat = material;
+  updateNormal();
   updateBoundingBox();
-}
-Triangle::Triangle(const glm::vec3 &a, const glm::vec3 &b, const glm::vec3 &c,
-                   Material &mat)
-    : Triangle(a, b, c) {
-  m_a = m_b = m_c = &mat;
 }
 
-// Getters
-glm::vec3 Triangle::getNormal() const { return normal; }
+void Triangle::print(std::ostream &out) const {
+  out << "Triangle: ";
+  out << "Mat[" << *mat << "], ";
+  out << "A[" << glm::to_string(a) << "], ";
+  out << "B[" << glm::to_string(b) << "], ";
+  out << "C[" << glm::to_string(c) << "], ";
+  out << "BLN[" << glm::to_string(bounding_bln) << "], ";
+  out << "TRF[" << glm::to_string(bounding_trf) << "]";
+}
+
+bool Triangle::pointInFace(const glm::vec3 &P) const {
+  glm::vec3 edge1 = b - a;
+  glm::vec3 edge2 = c - b;
+  glm::vec3 edge3 = a - c;
+
+  glm::vec3 ap = P - a;
+  glm::vec3 bp = P - b;
+  glm::vec3 cp = P - c;
+
+  glm::vec3 cross1 = cross(edge1, ap);
+  glm::vec3 cross2 = cross(edge2, bp);
+  glm::vec3 cross3 = cross(edge3, cp);
+
+  if (dot(cross1, normal) >= 0 && dot(cross2, normal) >= 0 &&
+      dot(cross3, normal) >= 0) {
+    return true; // The point is inside the triangle
+  }
+  return false;
+}
+
+glm::vec3 Triangle::intersectRay(const glm::vec3 &origin,
+                                 const glm::vec3 &direction) const {
+  float denominator = dot(normal, direction);
+  // If the denominator is close to zero, the ray is parallel to the triangle
+  if (abs(denominator) < 1e-6) {
+    return glm::vec3(0);
+  }
+
+  // The intersection point with the plane of the triangle
+  float t = dot(normal, a - origin) / denominator;
+
+  // If t is less than or equal to zero, the intersection is behind the ray's
+  // origin
+  if (t <= 0)
+    return glm::vec3(0);
+
+  // Calculate the exact intersection point
+  glm::vec3 P = origin + t * direction;
+
+  if (pointInFace(P))
+    return P;
+
+  return glm::vec3(0);
+}
 glm::vec3 Triangle::getNormal(const glm::vec3 &intersect) const {
   return normal;
 }
-
-// Functional
+Primitive *Triangle::copy() { return new Triangle(a, b, c, mat); }
+void Triangle::updateNormal() {
+  normal = glm::normalize(glm::cross(b - a, c - a));
+}
 void Triangle::updateBoundingBox() {
   glm::vec3 minPoint = a;
   glm::vec3 maxPoint = a;
-
-  // Check vertex b and update min/max points
-  minPoint.x = std::min(b.x, minPoint.x);
-  minPoint.y = std::min(b.y, minPoint.y);
-  minPoint.z = std::min(b.z, minPoint.z);
-
-  maxPoint.x = std::max(b.x, maxPoint.x);
-  maxPoint.y = std::max(b.y, maxPoint.y);
-  maxPoint.z = std::max(b.z, maxPoint.z);
-
-  // Check vertex c and update min/max points
-  minPoint.x = std::min(c.x, minPoint.x);
-  minPoint.y = std::min(c.y, minPoint.y);
-  minPoint.z = std::min(c.z, minPoint.z);
-
-  maxPoint.x = std::max(c.x, maxPoint.x);
-  maxPoint.y = std::max(c.y, maxPoint.y);
-  maxPoint.z = std::max(c.z, maxPoint.z);
-
-  // Now minPoint contains the coordinates for the bottom left near point
-  // and maxPoint contains the coordinates for the top right far point of the
-  // bounding box.
+  minPoint = glm::min(minPoint, b);
+  maxPoint = glm::max(maxPoint, b);
+  minPoint = glm::min(minPoint, c);
+  maxPoint = glm::max(maxPoint, c);
   bounding_bln = minPoint;
   bounding_trf = maxPoint;
-}
-glm::vec3 Triangle::intersectRay(const Ray &ray) const {
-  return ray.intersectTrianglePoint(*this);
-}
-void Triangle::print(std::ostream &out) const {
-  out << "Cube: "
-      << "M[" << *mat << "]";
-}
-glm::vec3 Triangle::barycentricPoint(const glm::vec3 &point) const {
-  // Compute vectors (note that we may have already computed these recently)
-  glm::vec3 v0 = b - a, v1 = c - a, v2 = point - a;
-  return barycentricPoint(point, v0, v1, v2);
-}
-bool Triangle::pointLiesInPlane(const glm::vec3 &point) const {
-  float offset = -dot(normal, a);
-  float planeEq = glm::dot(normal, point) + offset;
-  const float epsilon = 1e-6f;
-  return std::fabs(planeEq) < epsilon;
-}
-glm::vec3 Triangle::barycentricPoint(const glm::vec3 &point,
-                                     const glm::vec3 &edge1,
-                                     const glm::vec3 &edge2,
-                                     const glm::vec3 &ap) const {
-  // Compute vectors (note that we may have already computed these recently)
-  glm::vec3 v0 = edge1, v1 = edge2, v2 = ap;
-
-  // Compute dot products
-  float d00 = glm::dot(edge1, edge1);
-  float d01 = glm::dot(edge1, edge2);
-  float d11 = glm::dot(edge2, edge2);
-  float d20 = glm::dot(ap, edge1);
-  float d21 = glm::dot(ap, edge2);
-
-  // Compute barycentric coordinates
-  float denom = d00 * d11 - d01 * d01;
-  float v = (d11 * d20 - d01 * d21) / denom;
-  float w = (d00 * d21 - d01 * d20) / denom;
-  float u = 1.0f - v - w;
-
-  // Return the barycentric coordinates
-  return glm::vec3(u, v, w);
 }

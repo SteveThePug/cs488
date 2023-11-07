@@ -1,7 +1,10 @@
 // Termm--Fall 2023
-#include "Light.hpp"
-#include <glm/ext.hpp>
+
 #include <iostream>
+
+#include <glm/ext.hpp>
+
+#include "Light.hpp"
 
 using namespace glm;
 
@@ -21,10 +24,17 @@ Light::Light(vec3 position, vec3 color, vec3 falloff)
   Light();
 }
 
-void Light::setFalloff(vec3 falloff) { this->falloff = falloff; }
+Light *Light::transformedLight(glm::mat4 trans) {
+  return new Light(vec3(trans * vec4(position, 1.0)), colour, falloff);
+}
 
 std::ostream &operator<<(std::ostream &out, const Light &l) {
-  out << "L[" << glm::to_string(l.colour) << ", " << glm::to_string(l.position)
-      << ", " << glm::to_string(l.falloff) << "]";
+  out << "L[" << to_string(l.colour) << ", " << to_string(l.position) << ", ";
+  for (int i = 0; i < 3; i++) {
+    if (i > 0)
+      out << ", ";
+    out << l.falloff[i];
+  }
+  out << "]";
   return out;
 }

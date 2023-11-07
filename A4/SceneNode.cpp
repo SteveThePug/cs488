@@ -2,10 +2,13 @@
 
 #include "SceneNode.hpp"
 
+#include "GeometryNode.hpp"
 #include "cs488-framework/MathUtils.hpp"
 
 #include <iostream>
+#include <set>
 #include <sstream>
+#include <tuple>
 using namespace std;
 
 #include <glm/ext.hpp>
@@ -52,20 +55,25 @@ const glm::mat4 &SceneNode::get_transform() const { return trans; }
 const glm::mat4 &SceneNode::get_inverse() const { return invtrans; }
 
 //---------------------------------------------------------------------------------------
-void SceneNode::add_child(SceneNode *child) { children.push_back(child); }
+void SceneNode::add_child(SceneNode *child) {
+  children.push_back(child);
+  if (child->heirarchal) {
+    child->set_transform(child->trans * trans);
+  }
+}
 
 //---------------------------------------------------------------------------------------
 void SceneNode::remove_child(SceneNode *child) { children.remove(child); }
 
 //---------------------------------------------------------------------------------------
-std::set<SceneNode *> SceneNode::get_geometryNodes() {
-  set<SceneNode *> set1;
+std::set<GeometryNode *> SceneNode::get_geometryNodes() {
+  set<GeometryNode *> set1;
+  if (m_nodeType == NodeType::GeometryNode) {
+    set1.insert(static_cast<GeometryNode *>(this));
+  }
 
   for (SceneNode *node : children) {
-    if (node->m_nodeType == NodeType::GeometryNode) {
-      set1.insert(node);
-    }
-    set<SceneNode *> nodeSet = node->get_geometryNodes();
+    set<GeometryNode *> nodeSet = node->get_geometryNodes();
     set1.insert(nodeSet.begin(), nodeSet.end());
   }
   return set1;
@@ -106,26 +114,16 @@ void SceneNode::translate(const glm::vec3 &amount) {
 int SceneNode::totalSceneNodes() const { return nodeInstanceCount; }
 
 //---------------------------------------------------------------------------------------
-std::ostream &operator<<(std::ostream &os, const SceneNode &node) {
-
-  // os << "SceneNode:[NodeType: ___, name: ____, id: ____, isSelected: ____,
-  // transform: ____"
-  switch (node.m_nodeType) {
-  case NodeType::SceneNode:
-    os << "SceneNode";
-    break;
-  case NodeType::GeometryNode:
-    os << "GeometryNode";
-    break;
-  case NodeType::JointNode:
-    os << "JointNode";
-    break;
-  }
+void SceneNode::print(std::ostream &os) const {
+  os << "SceneNode";
   os << ":[";
-
-  os << "name:" << node.m_name << ", ";
-  os << "id:" << node.m_nodeId;
-
+  os << "name:" << m_name << ", ";
+  os << "id:" << m_nodeId;
   os << "]\n";
+}
+
+//---------------------------------------------------------------------------------------
+std::ostream &operator<<(std::ostream &os, const SceneNode &node) {
+  node.print(os);
   return os;
 }

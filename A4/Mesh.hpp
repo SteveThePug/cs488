@@ -10,21 +10,18 @@
 
 #include "Primitive.hpp"
 
-// Use this #define to selectively compile your code to render the
-// bounding boxes around your mesh objects. Uncomment this option
-// to turn it on.
-// #define RENDER_BOUNDING_VOLUMES
-
-// A polygonal mesh.
 class Mesh : public Primitive {
-private:
-  std::vector<glm::vec3> m_vertices;
+public:
   std::vector<Triangle> m_faces;
 
-public:
   Mesh(const std::string &fname);
-  glm::vec3 intersectRay(const Ray &ray) const override;
-  glm::vec3 getNormal(const glm::vec3 &intersect) const override;
-  void print(std::ostream &out) const override;
-  friend std::ostream &operator<<(std::ostream &out, const Mesh &mesh);
+  Mesh(std::vector<Triangle> faces);
+
+  virtual void print(std::ostream &out) const override;
+
+  virtual glm::vec3 intersectRay(const glm::vec3 &position,
+                                 const glm::vec3 &direction) const override;
+  virtual glm::vec3 getNormal(const glm::vec3 &intersect) const override;
+  virtual Primitive *copy() override;
+  virtual void updateBoundingBox() override;
 };

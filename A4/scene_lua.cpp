@@ -210,8 +210,8 @@ extern "C" int gr_nh_sphere_cmd(lua_State *L) {
   get_tuple(L, 2, &pos[0], 3);
 
   double radius = luaL_checknumber(L, 3);
-  Sphere *sphere = new Sphere(pos, radius);
-  data->node = new GeometryNode(name, *sphere);
+  data->node = new GeometryNode(name, *new Sphere(pos, radius));
+  data->node->heirarchal = false;
 
   luaL_getmetatable(L, "gr.node");
   lua_setmetatable(L, -2);
@@ -234,6 +234,7 @@ extern "C" int gr_nh_box_cmd(lua_State *L) {
   double radius = luaL_checknumber(L, 3);
   Cube *cube = new Cube(pos, radius);
   data->node = new GeometryNode(name, *cube);
+  data->node->heirarchal = false;
 
   luaL_getmetatable(L, "gr.node");
   lua_setmetatable(L, -2);

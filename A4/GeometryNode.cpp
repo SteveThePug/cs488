@@ -6,7 +6,7 @@
 GeometryNode::GeometryNode(const std::string &name, Primitive &prim)
     : SceneNode(name), m_primitive(prim) {
   m_nodeType = NodeType::GeometryNode;
-  setMaterial(&Material::m_s);
+  setMaterial(&Primitive::static_mat);
 }
 GeometryNode::GeometryNode(const std::string &name, Primitive &prim,
                            Material *mat)
@@ -15,4 +15,13 @@ GeometryNode::GeometryNode(const std::string &name, Primitive &prim,
   setMaterial(mat);
 }
 
-void GeometryNode::setMaterial(Material *mat) { m_primitive.setMaterial(mat); }
+void GeometryNode::setMaterial(Material *mat) { m_primitive.mat = mat; }
+
+void GeometryNode::print(std::ostream &os) const {
+  os << "GeometryNode";
+  os << ":[";
+  os << "name:" << m_name << ", ";
+  os << "id:" << m_nodeId;
+  os << "]\n";
+  os << m_primitive;
+}

@@ -5,18 +5,13 @@
 #include <glm/glm.hpp>
 #include <ostream>
 
-#include "Material.hpp"
-
 class Material {
 private:
   glm::vec3 m_kd;
   glm::vec3 m_ks;
-
   double m_shininess;
 
 public:
-  static Material m_s;
-
   Material();
   Material(const glm::vec3 &kd, const glm::vec3 &ks, double shininess);
   virtual ~Material();

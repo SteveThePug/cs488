@@ -12,6 +12,7 @@
 #include <string>
 
 enum class NodeType { SceneNode, GeometryNode, JointNode };
+class GeometryNode;
 
 class SceneNode {
 public:
@@ -32,18 +33,20 @@ public:
 
   void remove_child(SceneNode *child);
 
-  std::set<SceneNode *> get_geometryNodes();
+  std::set<GeometryNode *> get_geometryNodes();
 
   //-- Transformations:
   void rotate(char axis, float angle);
   void scale(const glm::vec3 &amount);
   void translate(const glm::vec3 &amount);
 
+  virtual void print(std::ostream &os) const;
   friend std::ostream &operator<<(std::ostream &os, const SceneNode &node);
 
   // Transformations
   glm::mat4 trans;
   glm::mat4 invtrans;
+  bool heirarchal = true;
 
   std::list<SceneNode *> children;
 

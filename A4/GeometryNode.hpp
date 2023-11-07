@@ -13,5 +13,7 @@ public:
   GeometryNode(const std::string &name, Primitive &prim);
   GeometryNode(const std::string &name, Primitive &prim, Material *mat);
 
-  void setMaterial(Material *mat);
+  void setMaterial(Material *material);
+
+  void print(std::ostream &os) const override;
 };

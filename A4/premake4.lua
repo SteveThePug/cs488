@@ -1,42 +1,42 @@
 #!lua
 
 includeDirList = {
-    "../shared",
-    "../shared/include",
-    "../shared/gl3w",
-    "../shared/imgui",
+	"../shared",
+	"../shared/include",
+	"../shared/gl3w",
+	"../shared/imgui",
 }
 
 libDirectories = {
-    "../lib",
+	"../lib",
 }
 
 if os.get() == "macosx" then
-    linkLibs = {
-        "cs488-framework",
-        "imgui",
-        "glfw3",
-        "lua",
-        "lodepng",
-    }
+	linkLibs = {
+		"cs488-framework",
+		"imgui",
+		"glfw3",
+		"lua",
+		"lodepng",
+	}
 end
 
 if os.get() == "linux" then
-    linkLibs = {
-        "cs488-framework",
-        "lua",
-        "lodepng",
-        "stdc++",
-        "dl",
-        "pthread",
-    }
+	linkLibs = {
+		"cs488-framework",
+		"lua",
+		"lodepng",
+		"stdc++",
+		"dl",
+		"pthread",
+	}
 end
 
 if os.get() == "macosx" then
-    linkOptionList = { "-framework IOKit", "-framework Cocoa", "-framework CoreVideo", "-framework OpenGL" }
+	linkOptionList = { "-framework IOKit", "-framework Cocoa", "-framework CoreVideo", "-framework OpenGL" }
 end
 
-buildOptions = { "-std=c++20" }
+buildOptions = { "-std=c++14 -O2" }
 
 solution("CS488-Projects")
 configurations({ "Debug", "Release" })
