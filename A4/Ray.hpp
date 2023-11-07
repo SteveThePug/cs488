@@ -12,12 +12,11 @@
  */
 class Ray {
 private:
+public:
   glm::vec3 origin;
   // Origin of ray
   glm::vec3 direction;
   // Directioin of travel for ray
-
-public:
   Ray(const Ray &) = default;
   Ray(Ray &&) = default;
   Ray &operator=(const Ray &) = default;
@@ -128,16 +127,4 @@ public:
   glm::vec3 phongShading(const std::list<Light *> &lights, const Camera &camera,
                          const glm::vec3 &point, const glm::vec3 &normal,
                          const Material &mat) const;
-
-  /**
-   * Phong shading for Barycentric point on a triangle
-   * @param lights Lights of the scene
-   * @param camera Camera of the scene
-   * @param barycentric_coord The Barycentric cord on the triangle
-   * @param triangle The triangle that is being intersected
-   * @return The color of the fragment
-   */
-  glm::vec3 phongShading(const std::list<Light *> &lights, const Camera &camera,
-                         const glm::vec3 &barycentric_coord,
-                         const Triangle &tri) const;
 };
